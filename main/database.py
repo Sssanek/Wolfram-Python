@@ -19,16 +19,21 @@ class DB:
         ''', (login, password))
         self.conn.commit()
 
-    # Проверка существования логина
+    # Проверка существования логина для регистрации
     def checkUserLogin(self, login):
-        if self.c.execute("select * from users where login like " + login):
+        users = self.c.execute(
+            '''SELECT * FROM users WHERE login=?''', (login,)
+        )
+        if users.fetchall():
             return True
         return False
 
-    # Проверка существования пользователя
+    # Проверка логина и пароля
     def checkUser(self, login, password):
-        users = self.c.execute("select * from users where login like " + login)
-        for user in users:
+        users = self.c.execute(
+            '''SELECT * FROM users WHERE login=?''', (login,)
+        )
+        for user in users.fetchall():
             if password == user[2]:
                 return (True, user[1])
         return (False, None)

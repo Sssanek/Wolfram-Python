@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from main.database import DB
-from main.styledWidgets import EntryWithPlaceholder, HoverButton
+from main.styledWidgets import EntryWithPlaceholder, HoverButton, App
 
 
 # Окно авторизации
@@ -57,6 +57,7 @@ class Authentication(Frame):
             wid.configure(bg='#00ace6')
         self.auth.pack(pady=150)
 
+    # Проверка введенного логина и пароля
     def check(self):
         self.loggined, self.User = self.db.checkUser(
             self.Login.get(),
@@ -73,6 +74,7 @@ class Authentication(Frame):
                 "Неверный логин или пароль"
             )
 
+    # Создание окна регистрации
     def register(self):
         self.newWindow = Toplevel(self.parent)
         self.app = Registr(self.newWindow, self.db)
