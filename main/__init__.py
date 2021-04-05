@@ -1,7 +1,123 @@
 from tkinter import *
 from tkinter import messagebox
 from main.database import DB
-from main.styledWidgets import EntryWithPlaceholder, HoverButton, App
+from main.styledWidgets import EntryWithPlaceholder, HoverButton
+
+
+# Окно с приложениями
+class App(Frame):
+    def __init__(self, parent, db):
+        # Объявление переменных
+        self.parent = parent
+        self.db = db
+        self.width = 28
+        self.height = 3
+        self.font = ("Courier", 30)
+
+        # Создание структуры окна
+        # Надпись
+        self.label = Label(
+            self.parent,
+            text='Приложения',
+            font=("Courier", 56)
+        )
+        # Все кнопки
+        self.Buttons = Frame()
+        self.Equation = HoverButton(
+            self.Buttons,
+            text="Решение уравнений",
+            font=self.font,
+            width=self.width,
+            height=self.height,
+            description=True,
+            descriptionText='Это делает Саня',
+            activebackground='#00ff00'
+        )
+        self.MatrixCalculator = HoverButton(
+            self.Buttons,
+            text="Матричный калькулятор",
+            font=self.font,
+            width=self.width,
+            height=self.height,
+            description=True,
+            descriptionText='Это делает Саня',
+            activebackground='#00ff00'
+        )
+        self.Calculator = HoverButton(
+            self.Buttons,
+            text="Арифметический калькулятор",
+            font=self.font,
+            width=self.width,
+            height=self.height,
+            description=True,
+            descriptionText='Это делает Витя',
+            activebackground='#00ff00'
+        )
+        self.RandomDigits = HoverButton(
+            self.Buttons,
+            text="Генератор случайных чисел",
+            font=self.font,
+            width=self.width,
+            height=self.height,
+            description=True,
+            descriptionText='Кто это делает?',
+            activebackground='#00ff00'
+        )
+        self.CalculatorSystemDigit = HoverButton(
+            self.Buttons,
+            text="Калькулятор перевода СС",
+            font=self.font,
+            width=self.width,
+            height=self.height,
+            description=True,
+            descriptionText='Кто это делает?',
+            activebackground='#00ff00'
+        )
+        self.CalculatorSystemUnits = HoverButton(
+            self.Buttons,
+            text="Калькулятор перевода единиц",
+            font=self.font,
+            width=self.width,
+            height=self.height,
+            description=True,
+            descriptionText='Кто это делает?',
+            activebackground='#00ff00'
+        )
+        self.TruthDiagram = HoverButton(
+            self.Buttons,
+            text="Калькулятор перевода единиц",
+            font=self.font,
+            width=self.width,
+            height=self.height,
+            description=True,
+            descriptionText='Кто это делает?',
+            activebackground='#00ff00'
+        )
+        # Раположение кнопок в сетку
+        self.Equation.grid(row=0, column=0, padx=(50, 30), pady=10)
+        self.MatrixCalculator.grid(row=0, column=1, padx=(30, 50), pady=10)
+        self.Calculator.grid(row=1, column=0, padx=(50, 30), pady=10)
+        self.RandomDigits.grid(row=1, column=1, padx=(30, 50), pady=10)
+        self.CalculatorSystemDigit.grid(
+            row=2,
+            column=0,
+            padx=(50, 30),
+            pady=10
+        )
+        self.CalculatorSystemUnits.grid(
+            row=2,
+            column=1,
+            padx=(30, 50),
+            pady=10
+        )
+        self.TruthDiagram.grid(row=3, column=0, padx=(50, 30), pady=10)
+        # Вывод на экран
+        self.label.pack()
+        self.Buttons.pack()
+        # Изменение цвета
+        self.parent['bg'] = '#00ace6'
+        for wid in self.parent.winfo_children():
+            wid.configure(bg='#00ace6')
 
 
 # Окно авторизации
@@ -67,6 +183,8 @@ class Authentication(Frame):
             self.parent.destroy()
             self.parent = Tk()
             self.app = App(self.parent, self.db)
+            self.parent.resizable(width=False, height=False)
+            self.parent.attributes('-fullscreen', True)
             self.parent.mainloop()
         else:
             messagebox.showerror(
@@ -124,6 +242,8 @@ class Registr(Frame):
         )
         self.submit.pack()
         self.parent['bg'] = '#00ace6'
+        self.parent.resizable(width=False, height=False)
+        self.parent.attributes('-fullscreen', True)
         for wid in self.parent.winfo_children():
             wid.configure(bg='#00ace6')
         self.reg.pack(pady=150)
@@ -143,6 +263,8 @@ class Registr(Frame):
                 "Регистрация",
                 "Пользователь успешно зарегистрирован"
             )
+            self.parent.attributes('-topmost', True)
+            self.parent.update()
             self.parent.destroy()
 
 
@@ -153,6 +275,8 @@ def create_app():
     root.title('Авторизация')
     root.geometry("1200x800")
     root['bg'] = '#00ace6'
+    root.resizable(width=False, height=False)
+    root.attributes('-fullscreen', True)
     app = Authentication(root, db)
     app.pack()
     root.mainloop()
