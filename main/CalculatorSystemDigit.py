@@ -18,6 +18,7 @@ class CalculatorSystemDigit(Frame):
         self.inputValue = StringVar()
         self.outputSystem = StringVar()
 
+        # Кнопка возврата назад
         self.back = HoverButton(
             self.parent,
             font=("Courier", 18),
@@ -111,7 +112,7 @@ class CalculatorSystemDigit(Frame):
         )
         self.submit.grid(row=4, column=0, padx=(0, 100))
         self.inputNumber.grid(row=2, column=0, ipady=20, padx=(0, 120))
-        self.result.grid(row=2, column=1)
+        self.result.grid(row=1, column=1, rowspan=3)
         self.mainPart.pack()
 
         # Изменение парметров окна
@@ -155,7 +156,13 @@ class CalculatorSystemDigit(Frame):
             n, m = divmod(n, to_base)
             res += alphabet[m]
         # Запись результата
-        self.result['text'] = res[::-1]
+        s = ''
+        res = res[::-1]
+        for i in range(len(res)):
+            if i % 30 == 0:
+                s += '\n'
+            s += res[i]
+        self.result['text'] = s
 
     # Метод для проверки валидности числа
     def checkSystem(self, systemToCheck, label, errorText):
