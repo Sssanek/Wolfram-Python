@@ -1,6 +1,7 @@
 from main.styledWidgets import HoverButton
 from main.CalculatorSystemDigit import CalculatorSystemDigit
 from main.TruthDiagram import TruthDiagram
+from main.MatrixesCalculator import MatrixesCalculator
 from tkinter import *
 
 
@@ -40,8 +41,9 @@ class App(Frame):
             width=self.width,
             height=self.height,
             description=True,
-            descriptionText='Это делает Саня',
-            activebackground='#00ff00'
+            descriptionText='Различные операции с \nодной или двумя матрицами',
+            activebackground='#00ff00',
+            command=self.createMatrixesCalculator
         )
         self.Calculator = HoverButton(
             self.Buttons,
@@ -131,3 +133,7 @@ class App(Frame):
     def createTruthDiagram(self):
         self.newApp = Toplevel(self.parent)
         self.app = TruthDiagram(self.newApp, self.db)
+
+    def createMatrixesCalculator(self):
+        self.newApp = Toplevel(self.parent)
+        self.app = MatrixesCalculator(self.newApp)
