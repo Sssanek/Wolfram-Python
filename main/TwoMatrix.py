@@ -1,7 +1,12 @@
 from tkinter import *
 from main.styledWidgets import EntryWithPlaceholder, HoverButton
 from tkinter import ttk
-from main.FullMatrixOperations import determinant_operation
+from main.FullMatrixOperations3 import determinant_operation
+from main.FullMatrixOperations3 import obratn_operation
+from main.FullMatrixOperations3 import sobstv_chisla_operation
+from main.FullMatrixOperations import sobstv_vectors_operation
+from main.FullMatrixOperations2 import spectr_razl_operation
+from main.FullMatrixOperations3 import holetsky_operation
 
 
 class TwoMatrix(Frame):
@@ -42,14 +47,8 @@ class TwoMatrix(Frame):
         self.kinda_result = Label(
             self.mainPart,
             font=self.font20,
-            text='Нихуя не произошло'
-        )
-
-        self.btn_for_something = Button(
-            self.mainPart,
-            font=self.font20,
-            text='Инфа про матрицу',
-            command=self.info
+            text='Здесь будет результат.',
+            bg='#55fa63'
         )
 
         self.btn_deter = HoverButton(
@@ -57,45 +56,62 @@ class TwoMatrix(Frame):
             font=self.font20,
             text='Рассчитать определитель\nматрицы',
             activebackground='#cf34eb',
-            command=self.determinant()
+            command=self.determinant
         )
 
         self.btn_obratn = HoverButton(
             self.mainPart,
             font=self.font20,
             text='Рассчитать обратную\nматрицу',
-            activebackground='#cf34eb'
+            activebackground='#cf34eb',
+            command=self.obratn
         )
 
         self.btn_sobstv_chisla = HoverButton(
             self.mainPart,
             font=self.font20,
             text='Рассчитать собственные\nчисла матрицы',
-            activebackground='#cf34eb'
+            activebackground='#cf34eb',
+            command=self.sobstv_chisla
         )
 
         self.btn_sobstv_vectora = HoverButton(
             self.mainPart,
             font=self.font20,
             text='Рассчитать собственные\nвектора матрицы',
-            activebackground='#cf34eb'
+            activebackground='#cf34eb',
+            command=self.sobstv_vectors
         )
 
         self.btn_razl_hol = HoverButton(
             self.mainPart,
             font=self.font20,
             text='Разложение\nХолецкого',
-            activebackground='#cf34eb'
+            activebackground='#cf34eb',
+            command=self.holetsky_razl
         )
 
         self.btn_razl_spectr = HoverButton(
             self.mainPart,
             font=self.font20,
             text='Спектральное\nразложение',
-            activebackground='#cf34eb'
+            activebackground='#cf34eb',
+            command=self.spectr_razl
         )
 
         # сетка виджетов
+        self.back.pack(anchor=NW, padx=20, pady=20)
+        self.mainPart.pack()
+        self.matrix_part.pack()
+
+        self.my_matrix = []
+
+        for y in range(2):
+            for x in range(2):
+                self.matrix = Entry(self.matrix_part, font=self.font30)
+                self.matrix.grid(row=y, column=x, pady=10, padx=10)
+                self.my_matrix.append(self.matrix)
+
         self.razmernost_label.grid(row=0, column=0)
         self.dimension.grid(row=0, column=1, columnspan=2)
         self.btn_deter.grid(row=1, column=0, columnspan=2,
@@ -111,18 +127,6 @@ class TwoMatrix(Frame):
         self.btn_razl_spectr.grid(row=2, column=4, columnspan=2,
                                   stick='WE', padx=5, pady=5)
         self.kinda_result.grid(row=3, column=0, columnspan=2)
-        self.btn_for_something.grid(row=3, column=2)
-        self.back.pack(anchor=NW, padx=20, pady=20)
-        self.mainPart.pack()
-        self.matrix_part.pack()
-
-        self.my_matrix = []
-
-        for y in range(2):
-            for x in range(2):
-                self.matrix = Entry(self.matrix_part, font=self.font30)
-                self.matrix.grid(row=y, column=x, pady=10, padx=10)
-                self.my_matrix.append(self.matrix)
 
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
@@ -154,7 +158,6 @@ class TwoMatrix(Frame):
                 self.matrix = Entry(self.matrix_part, font=self.font30)
                 self.matrix.grid(row=y, column=x, pady=10, padx=10)
                 self.my_matrix.append(self.matrix)
-        self.kinda_result['text'] = 'ЕБАТЬ ЧЕТА РАБОТАЕТ'
 
     def determinant(self):
         mas = []
@@ -162,6 +165,52 @@ class TwoMatrix(Frame):
             mas.append(i.get())
         print(mas)
         self.kinda_result['text'] = determinant_operation(
+            mas,
+            self.dimension.get()
+        )
+
+    def obratn(self):
+        mas = []
+        for i in self.my_matrix:
+            mas.append(i.get())
+        print(mas)
+        self.kinda_result['text'] = obratn_operation(
+            mas,
+            self.dimension.get()
+        )
+
+    def sobstv_chisla(self):
+        mas = []
+        for i in self.my_matrix:
+            mas.append(i.get())
+        self.kinda_result['text'] = sobstv_chisla_operation(
+            mas,
+            self.dimension.get()
+        )
+
+    def sobstv_vectors(self):
+        mas = []
+        for i in self.my_matrix:
+            mas.append(i.get())
+        self.kinda_result['text'] = sobstv_vectors_operation(
+            mas,
+            self.dimension.get()
+        )
+
+    def spectr_razl(self):
+        mas = []
+        for i in self.my_matrix:
+            mas.append(i.get())
+        self.kinda_result['text'] = spectr_razl_operation(
+            mas,
+            self.dimension.get()
+        )
+
+    def holetsky_razl(self):
+        mas = []
+        for i in self.my_matrix:
+            mas.append(i.get())
+        self.kinda_result['text'] = holetsky_operation(
             mas,
             self.dimension.get()
         )
