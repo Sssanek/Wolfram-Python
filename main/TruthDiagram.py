@@ -80,9 +80,11 @@ class TruthDiagram(Frame):
                         s = ''
                 else:
                     s += i
-            variables.add(s)
+            if s != 'Логическое выражение' and s:
+                variables.add(s)
             variables = sorted(list(variables))
             # Текстовое поле со скроллом
+            print(variables)
             self.createText()
             # Вывод переменных
             for i in variables:
