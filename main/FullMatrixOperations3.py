@@ -1,5 +1,6 @@
 from math import *
 
+
 def digit_try(mas):
     flag = False
     for i, value in enumerate(mas):
@@ -33,8 +34,11 @@ def count_sobstv_2(mas):
 def count_sobstv_3(mas):
     a = -1
     b = mas[0] + mas[4] + mas[8]
-    c = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] - mas[5] * mas[7] - mas[1] * mas[3] - mas[2] * mas[6])
-    d = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] - mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] + mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
+    c = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] -
+           mas[5] * mas[7] - mas[1] * mas[3] - mas[2] * mas[6])
+    d = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] \
+        - mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] \
+        + mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
     q = (a ** 2 - 3 * b) / 9
     r = (2 * a ** 3 - 9 * a * b + 27 * c) / 54
     s = q ** 3 - r ** 2
@@ -69,7 +73,8 @@ def holetsky_operation(matrix, dim):
         if digit_try(matrix):
             return 'Введите цифры в поля'
         if matrix[1] != matrix[2]:
-            return 'Матрица для разложения Холецкого\nдолжна быть симметричной'
+            return 'Матрица для разложения Холецкого\n' \
+                   'должна быть симметричной'
         matrix = int_matrix(matrix)
         try:
             l11 = matrix[0] ** 0.5
@@ -80,13 +85,15 @@ def holetsky_operation(matrix, dim):
         l11 = complex(round(l11.real, 2), round(l11.imag, 2))
         l21 = complex(round(l21.real, 2), round(l21.imag, 2))
         l22 = complex(round(l22.real, 2), round(l22.imag, 2))
-        return '|' + str(l11) + ' 0 ' + '| |' + str(l11) + ' ' + str(l21) + '|\n|' + str(l21) + ' ' + str(l22) + '| | 0 ' + str(l22) + '| '
+        return '|' + str(l11) + ' 0 ' + '| |' + str(l11) + ' ' + str(l21) +\
+               '|\n|' + str(l21) + ' ' + str(l22) + '| | 0 ' + str(l22) + '| '
     elif dim == '3 на 3':
         if any([i == '' for i in matrix]):
             return 'Введите значения во все поля'
         if digit_try(matrix):
             return 'Введите цифры в поля'
-        if matrix[3] != matrix[1] or matrix[6] != matrix[2] or matrix[7] != matrix[5]:
+        if matrix[3] != matrix[1] or matrix[6] != matrix[2] \
+                or matrix[7] != matrix[5]:
             return 'Матрица для разложения Холецкого\nдолжна быть ' \
                    'симметричной '
         try:
@@ -105,7 +112,11 @@ def holetsky_operation(matrix, dim):
         l22 = complex(round(l22.real, 2), round(l22.imag, 2))
         l32 = complex(round(l32.real, 2), round(l32.imag, 2))
         l33 = complex(round(l33.real, 2), round(l33.imag, 2))
-        return '|' + str(l11) + ' 0 ' + '0| |' + str(l11) + ' ' + str(l21) + ' ' + str(l31) + '|\n' + '|' + str(l21) + ' ' + str(l22) + ' 0| | 0 ' + str(l22) + ' ' + str(l32) + '|\n' + '|' + str(l31) + ' ' + str(l32) + ' ' + str(l33) + '| |0  0 ' + str(l33) + '|'
+        return '|' + str(l11) + ' 0 ' + '0| |' + str(l11) + ' ' + str(l21) \
+               + ' ' + str(l31) + '|\n' + '|' + str(l21) + ' ' + str(l22) +\
+               ' 0| | 0 ' + str(l22) + ' ' + str(l32) + '|\n' + '|' +\
+               str(l31) + ' ' + str(l32) + ' ' + str(l33) + '| |0  0 ' +\
+               str(l33) + '|'
 
 
 def determinant_operation(matrix, dim):
@@ -124,8 +135,8 @@ def determinant_operation(matrix, dim):
             return 'Введите цифры в поля'
         matrix = int_matrix(matrix)
         det = matrix[0] * (matrix[4] * matrix[8] - matrix[5] * matrix[7]) - \
-              matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) + \
-              matrix[2] * (matrix[3] * matrix[7] - matrix[6] * matrix[4])
+            matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) + \
+            matrix[2] * (matrix[3] * matrix[7] - matrix[6] * matrix[4])
         return 'Детерминант матрицы: ' + str(det)
     return 'Что-то пошло не так'
 
@@ -151,8 +162,8 @@ def obratn_operation(matrix, dim):
             return 'Введите цифры в поля'
         matrix = int_matrix(matrix)
         det = matrix[0] * (matrix[4] * matrix[8] - matrix[5] * matrix[7]) \
-              - matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) \
-              + matrix[2] * (matrix[3] * matrix[7] - matrix[6] * matrix[4])
+            - matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) \
+            + matrix[2] * (matrix[3] * matrix[7] - matrix[6] * matrix[4])
         if det == 0:
             return 'Обратную матрицу невозможно найти,\n' \
                    'так как детерминант матрицы равен нулю'
@@ -164,6 +175,7 @@ def obratn_operation(matrix, dim):
             matrix[5]) + ' ' + str(matrix[8]) + '|'
     return 'Что-то пошло не так'
 
+
 def sobstv_chisla_operation(matrix, dim):
     if dim == '2 на 2':
         if any([i == '' for i in matrix]):
@@ -171,7 +183,8 @@ def sobstv_chisla_operation(matrix, dim):
         if digit_try(matrix):
             return 'Введите цифры в поля'
         matrix = int_matrix(matrix)
-        if (matrix[0] + matrix[3]) ** 2 - 4 * (matrix[0] * matrix[3] - matrix[1] * matrix[2]) < 0:
+        if (matrix[0] + matrix[3]) ** 2 - 4 * (matrix[0] * matrix[3] -
+                                               matrix[1] * matrix[2]) < 0:
             return 'У матрицы нет собственных чисел'
         x1, x2 = count_sobstv_2(matrix)
         return 'Собственные числа матрицы: ' + str(x1) + ' ' + str(x2)
@@ -185,5 +198,6 @@ def sobstv_chisla_operation(matrix, dim):
         if x2 == 'nan':
             return 'Собственные числа матрицы: ' + str(round(x1, 2))
         else:
-            return 'Собственные числа матрицы: ' + str(round(x1, 2)) + ' ' + str(round(x2, 2))
+            return 'Собственные числа матрицы: ' + str(round(x1, 2)) + ' ' +\
+                   str(round(x2, 2))
     return 'Что-то пошло не так'

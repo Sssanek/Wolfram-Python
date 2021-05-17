@@ -1,5 +1,6 @@
 from math import *
 
+
 def sgn(x):
     if x > 0:
         return 1
@@ -33,8 +34,11 @@ def count_sobstv_2(mas):
 def count_sobstv_3(mas):
     a = -1
     b = mas[0] + mas[4] + mas[8]
-    c = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] - mas[5] * mas[7] - mas[1] * mas[3] - mas[2] * mas[6])
-    d = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] - mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] + mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
+    c = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] -
+           mas[5] * mas[7] - mas[1] * mas[3] - mas[2] * mas[6])
+    d = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] -\
+        mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] +\
+        mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
     q = (a ** 2 - 3 * b) / 9
     r = (2 * a ** 3 - 9 * a * b + 27 * c) / 54
     s = q ** 3 - r ** 2
@@ -60,7 +64,6 @@ def count_sobstv_3(mas):
         return x1, 'nan'
     else:
         return x1, x2
-
 
 
 def sobstv_vectors_operation(matrix, dim):
@@ -101,7 +104,8 @@ def sobstv_vectors_operation(matrix, dim):
         if flag:
             return 'У матрицы нет собственных векторов'
         else:
-            return 'собственный вектор матрицы:\n' + '(' + str(round(y1, 2)) + ',' + str(round(y2, 2)) + ')'
+            return 'собственный вектор матрицы:\n' +\
+                   '(' + str(round(y1, 2)) + ',' + str(round(y2, 2)) + ') '
     # не сделано нихуя
     elif dim == '3 на 3':
         if any([i == '' for i in matrix]):
@@ -128,7 +132,9 @@ def sobstv_vectors_operation(matrix, dim):
                 y1 = 1
                 y2 = 1
                 y3 = - b / c
-                return 'собственный вектор матрицы:\n' + '(' + str(round(y1, 2)) + ',' + str(round(y2, 2)) + ',' + str(round(y3, 2)) + ')'
+                return 'собственный вектор матрицы:\n' + '('\
+                       + str(round(y1, 2)) + ',' + str(round(y2, 2)) +\
+                       ',' + str(round(y3, 2)) + ')'
             if b == 0:
                 y2 = 0
                 y1 = 0
@@ -157,7 +163,8 @@ def sobstv_vectors_operation(matrix, dim):
             c = (matrix[2] + matrix[5] + matrix[8] - x1)
             if a == b == c == 0:
                 y1, y2, y3 = 1, 1, 1
-            if (a == 0 and b == 0) or (a == 0 and c == 0) or (c == 0 and b == 0):
+            if (a == 0 and b == 0) or (a == 0 and c == 0)\
+                    or (c == 0 and b == 0):
                 pass
             else:
                 if a == 0:

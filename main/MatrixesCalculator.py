@@ -58,13 +58,10 @@ class MatrixesCalculator(Frame):
     def returnBack(self):
         self.parent.destroy()
 
-
     def createOneMatrix(self):
         self.newApp = Toplevel(self.parent)
         self.app = OneMatrix(self.newApp)
 
-
     def createTwoMatrix(self):
         self.newApp = Toplevel(self.parent)
         self.app = TwoMatrix(self.newApp)
-

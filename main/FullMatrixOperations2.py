@@ -34,8 +34,11 @@ def count_sobstv_2(mas):
 def count_sobstv_3(mas):
     a = -1
     b = mas[0] + mas[4] + mas[8]
-    c = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] - mas[5] * mas[7] - mas[1] * mas[3] - mas[2] * mas[6])
-    d = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] - mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] + mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
+    c = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] -
+           mas[5] * mas[7] - mas[1] * mas[3] - mas[2] * mas[6])
+    d = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] - \
+        mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] + \
+        mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
     q = (a ** 2 - 3 * b) / 9
     r = (2 * a ** 3 - 9 * a * b + 27 * c) / 54
     s = q ** 3 - r ** 2
@@ -47,13 +50,13 @@ def count_sobstv_3(mas):
         x3 = -2 * q ** 0.5 * cos(fi - 2 * pi / 3) - a / 3
     elif s < 0:
         if q > 0:
-            fi = (1 / 3) * acosh(abs(r) / q ** (2/3))
+            fi = (1 / 3) * acosh(abs(r) / q ** (2 / 3))
             x1 = -2 * sgn(r) * q ** 0.5 * cosh(fi) - a / 3
         if q < 0:
             fi = 1 / 3 * acosh(1 + abs(r) / abs(q ** 3))
             x1 = -2 * sgn(r) * abs(q) ** 0.5 * cosh(fi) - a / 3
         if q == 0:
-            x1 = -(c - a ** 3 / 27) ** 1/3 - a / 3
+            x1 = -(c - a ** 3 / 27) ** 1 / 3 - a / 3
     elif s == 0:
         x1 = -2 * r ** (1 / 3) - a / 3
         x2 = r ** (1 / 3) - a / 3
@@ -74,7 +77,8 @@ def spectr_razl_operation(matrix, dim):
         if det == 0:
             return 'Обратную матрицу невозможно найти,\n' \
                    'так как детерминант матрицы равен нулю'
-        if (matrix[0] + matrix[3]) ** 2 - 4 * (matrix[0] * matrix[3] - matrix[1] * matrix[2]) < 0:
+        if (matrix[0] + matrix[3]) ** 2 - 4 * (matrix[0] * matrix[3] -
+                                               matrix[1] * matrix[2]) < 0:
             return 'У матрицы нет собственных чисел'
         matrix_priv = [round(matrix[i] / det, 2) for i in range(4)]
         x1, x2 = count_sobstv_2(matrix)
@@ -109,7 +113,11 @@ def spectr_razl_operation(matrix, dim):
         if flag:
             return 'У матрицы нет собственных векторов'
         else:
-            return '|' + str(round(y1, 2)) + '| ' + '|' + str(x1) + ' 0| ' + '|' + str(matrix_priv[0]) + ' ' + str(matrix_priv[2]) + '|\n' + '|' + str(round(y2, 2)) + '| ' + '|0 ' + str(x1) + '| ' + '|' + str(matrix_priv[1]) + ' ' + str(matrix_priv[3]) + '|'
+            return '|' + str(round(y1, 2)) + '| ' + '|' + str(x1) + ' 0| ' + \
+                   '|' + str(matrix_priv[0]) + ' ' + str(matrix_priv[2]) + \
+                   '|\n' + '|' + str(round(y2, 2)) + '| ' + '|0 ' \
+                   + str(x1) + '| ' + '|' + str(matrix_priv[1]) + ' ' + \
+                   str(matrix_priv[3]) + '|'
     elif dim == '3 на 3':
         if any([i == '' for i in matrix]):
             return 'Введите значения во все поля'
@@ -117,8 +125,8 @@ def spectr_razl_operation(matrix, dim):
             return 'Введите цифры в поля'
         matrix = int_matrix(matrix)
         det = matrix[0] * (matrix[4] * matrix[8] - matrix[5] * matrix[7]) \
-              - matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) \
-              + matrix[2] * (matrix[3] * matrix[7] - matrix[6] * matrix[4])
+            - matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) \
+            + matrix[2] * (matrix[3] * matrix[7] - matrix[6] * matrix[4])
         if det == 0:
             return 'Обратную матрицу невозможно найти,\n' \
                    'так как детерминант матрицы равен нулю'
@@ -192,9 +200,14 @@ def spectr_razl_operation(matrix, dim):
             return 'У матрицы нет спектрального разложения'
         else:
             x1 = round(x1, 2)
-            return '|' + str(round(y1, 2)) + '| ' + '|' + str(x1) + '  0  0| ' + '|' + str(matrix[0]) + ' ' + str(
-            matrix[3]) + ' ' + str(matrix[6]) + '|\n' + '|' + str(round(y2, 2)) + '| ' + '|0 ' + str(x1) + ' 0| ' + '|' + str(
-            matrix[1]) + ' ' + str(matrix[4]) + ' ' + str(
-            matrix[7]) + '|\n' + '|' + str(round(y3, 2)) + '| ' + '|0  0 ' + str(x1) + '| ' + '|' + str(matrix[2]) + ' ' + str(
-            matrix[5]) + ' ' + str(matrix[8]) + '|'
+            return '|' + str(round(y1, 2)) + '| ' + '|' + str(x1) + \
+                   '  0  0| ' + '|' + str(matrix[0]) + ' ' + str(
+                matrix[3]) + ' ' + str(matrix[6]) + '|\n' + '|' + \
+                str(round(y2, 2)) + '| ' + '|0 ' + str(x1) + \
+                ' 0| ' + '|' + str(
+                matrix[1]) + ' ' + str(matrix[4]) + ' ' + str(
+                matrix[7]) + '|\n' + '|' + str(round(y3, 2)) + '| ' + \
+                '|0  0 ' + str(x1) + '| ' + '|' + str(matrix[2]) + \
+                ' ' + str(
+                matrix[5]) + ' ' + str(matrix[8]) + '|'
     return 'Что-то пошло не так'

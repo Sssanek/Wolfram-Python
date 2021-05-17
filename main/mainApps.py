@@ -2,6 +2,7 @@ from main.styledWidgets import HoverButton
 from main.CalculatorSystemDigit import CalculatorSystemDigit
 from main.TruthDiagram import TruthDiagram
 from main.MatrixesCalculator import MatrixesCalculator
+from main.Equations import Equations
 from tkinter import *
 
 
@@ -31,8 +32,10 @@ class App(Frame):
             width=self.width,
             height=self.height,
             description=True,
-            descriptionText='Это делает Саня',
-            activebackground='#00ff00'
+            descriptionText='Решение нелинейных уравнений\n-методом деления '
+                            'пополам\n-методом Ньютона',
+            activebackground='#00ff00',
+            command=self.createEquations
         )
         self.MatrixCalculator = HoverButton(
             self.Buttons,
@@ -137,3 +140,7 @@ class App(Frame):
     def createMatrixesCalculator(self):
         self.newApp = Toplevel(self.parent)
         self.app = MatrixesCalculator(self.newApp)
+
+    def createEquations(self):
+        self.newApp = Toplevel(self.parent)
+        self.app = Equations(self.newApp)
