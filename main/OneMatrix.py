@@ -9,8 +9,8 @@ class OneMatrix(Frame):
     def __init__(self, parent):
         # Объявление переменных
         self.parent = parent
-        self.font30 = ("Courier", 30)
-        self.font20 = ("Courier", 20)
+        self.font30 = ("Courier", 18)
+        self.font20 = ("Courier", 13)
         self.dimensions = 'three'
 
         # Основной фрейм
@@ -82,14 +82,14 @@ class OneMatrix(Frame):
         # расставляю 3 кнопки для подсчета нужной величины нужным способом
         self.scalar_coord = HoverButton(
             self.mainPart,
-            font=("Courier", 24),
+            font=("Courier", 15),
             text='Рассчитать скалярное произведение\nчерез координаты',
             activebackground='#cf34eb',
             command=lambda: self.scalar_coord_op()
         )
         self.scalar_angle = HoverButton(
             self.mainPart,
-            font=("Courier", 24),
+            font=("Courier", 15),
             text='Рассчитать скалярное произведение ' +
                  'через\nмодули векторов и угол между ними',
             activebackground='#cf34eb',
@@ -97,7 +97,7 @@ class OneMatrix(Frame):
         )
         self.vector_coord = HoverButton(
             self.mainPart,
-            font=("Courier", 24),
+            font=("Courier", 15),
             text='Рассчитать векторное произведение ' +
                  'через\nкоординаты векторов',
             activebackground='#cf34eb',

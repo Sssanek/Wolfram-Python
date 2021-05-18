@@ -117,7 +117,7 @@ class CalculatorSystemDigit(Frame):
 
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-fullscreen', True)
+        self.parent.attributes('-zoomed', True)
 
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():

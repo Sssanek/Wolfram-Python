@@ -64,7 +64,18 @@ class Authentication(Frame):
         self.label['bg'] = '#00ace6'
         for wid in self.parent.winfo_children():
             wid.configure(bg='#00ace6')
-        self.auth.pack(pady=150)
+        self.exit = HoverButton(
+            self.parent,
+            font=("Courier", 20),
+            text='Выход',
+            activebackground='#00ff00',
+            command=self.close
+        )
+        self.exit.pack(anchor=NW, padx=20, pady=20)
+        self.auth.pack(pady=110)
+
+    def close(self):
+        self.parent.destroy()
 
     # Проверка введенного логина и пароля
     def check(self):
@@ -99,7 +110,6 @@ def create_app():
     root = Tk()
     # Изменение параметров окна
     root.title('Авторизация')
-    root.geometry("1200x800")
     root['bg'] = '#00ace6'
     root.resizable(width=False, height=False)
     root.attributes('-fullscreen', True)

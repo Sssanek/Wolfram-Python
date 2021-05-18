@@ -50,7 +50,20 @@ class Registr(Frame):
         self.parent.attributes('-fullscreen', True)
         for wid in self.parent.winfo_children():
             wid.configure(bg='#00ace6')
+        # Кнопка выхода
+        self.back = HoverButton(
+            self.parent,
+            font=("Courier", 20),
+            text='Назад',
+            activebackground='#00ff00',
+            command=self.close
+        )
+        self.back.pack(anchor=NW, padx=20, pady=20)
         self.reg.pack(pady=150)
+
+    # Функция назад
+    def close(self):
+        self.parent.destroy()
 
     # Добавление в базу данных и проверха возможности добавления
     def addToDb(self, login, password):

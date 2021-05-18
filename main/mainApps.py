@@ -105,6 +105,16 @@ class App(Frame):
             activebackground='#00ff00',
             command=self.createTruthDiagram
         )
+        self.configs = HoverButton(
+            self.Buttons,
+            text="Настройки приложения",
+            font=self.font,
+            width=self.width,
+            height=self.height,
+            description=True,
+            descriptionText="Потом сделаю",
+            activebackground='#00ff00'
+        )
         # Раположение кнопок в сетку
         self.Equation.grid(row=0, column=0, padx=(50, 30), pady=10)
         self.MatrixCalculator.grid(row=0, column=1, padx=(30, 50), pady=10)
@@ -123,6 +133,7 @@ class App(Frame):
             pady=10
         )
         self.TruthDiagram.grid(row=3, column=0, padx=(50, 30), pady=10)
+        self.configs.grid(row=3, column=1, padx=(30, 50), pady=10)
         # Вывод на экран
         self.label.pack()
         self.Buttons.pack()
@@ -130,6 +141,19 @@ class App(Frame):
         self.parent['bg'] = '#00ace6'
         for wid in self.parent.winfo_children():
             wid.configure(bg='#00ace6')
+        # Кнопка выхода
+        self.exit = HoverButton(
+            self.parent,
+            font=("Courier", 20),
+            text='Выход',
+            activebackground='#00ff00',
+            command=self.close
+        )
+        self.exit.pack(anchor=NE, padx=20, pady=20)
+
+    # Кнопка выхода
+    def close(self):
+        self.parent.destroy()
 
     # Создание приложения для перевода систем счисления
     def createCalculatorSystemDigit(self):

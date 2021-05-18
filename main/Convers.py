@@ -1,22 +1,23 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-from main.styledWidgets import HoverButton, EntryWithPlaceholder
+from main.styledWidgets import HoverButton
+
+
+def size_check(*args):
+    for name in (
+        timeValue, barValue, lengthValue, weigthValue,
+        volumeValue, areaValue, speedValue, tempValue, energyValue):
+        value = name.get()
+        if len(value) > 1:
+            if ((value[0] == '0') and (value[1] == '0')) or (
+                (value[0] == '0') and (value[1] != '.')):
+                name.set(value[1:])
+        if len(value) > 8:
+            name.set(value[:8])
 
 
 class Convers(Frame):
     def __init__(self, parent, db):
-
-        def size_check(*args):
-            for name in (timeValue, barValue, lengthValue, weigthValue,
-                         volumeValue, areaValue, speedValue, tempValue,
-                         energyValue):
-                value = name.get()
-                if len(value) > 1:
-                    if ((value[0] == '0') and (value[1] == '0')) or (
-                            (value[0] == '0') and (value[1] != '.')):
-                        name.set(value[1:])
-                if len(value) > 8:
-                    name.set(value[:8])
 
         # Задание основных переменных
         self.parent = parent
