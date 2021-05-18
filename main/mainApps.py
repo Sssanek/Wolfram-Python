@@ -147,7 +147,7 @@ class App(Frame):
     def createEquations(self):
         self.newApp = Toplevel(self.parent)
         self.app = Equations(self.newApp)
-        
+
     def createConvers(self):
         self.newApp = Toplevel(self.parent)
-        self.app = convers(self.newApp, self.db)
+        self.app = Convers(self.newApp, self.db)
