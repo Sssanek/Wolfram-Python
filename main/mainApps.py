@@ -3,6 +3,7 @@ from main.CalculatorSystemDigit import CalculatorSystemDigit
 from main.TruthDiagram import TruthDiagram
 from main.MatrixesCalculator import MatrixesCalculator
 from main.Equations import Equations
+from main.Convers import Convers
 from tkinter import *
 
 
@@ -87,8 +88,10 @@ class App(Frame):
             width=self.width,
             height=self.height,
             description=True,
-            descriptionText='Это делает Витя',
-            activebackground='#00ff00'
+            descriptionText='Калькулятор для перевода величин\
+\n из одних систем единиц в другие',
+            activebackground='#00ff00',
+            command=self.createConvers
         )
         self.TruthDiagram = HoverButton(
             self.Buttons,
@@ -144,3 +147,7 @@ class App(Frame):
     def createEquations(self):
         self.newApp = Toplevel(self.parent)
         self.app = Equations(self.newApp)
+        
+    def createConvers(self):
+        self.newApp = Toplevel(self.parent)
+        self.app = convers(self.newApp, self.db)
