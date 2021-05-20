@@ -3,7 +3,7 @@ from main.CalculatorSystemDigit import CalculatorSystemDigit
 from main.TruthDiagram import TruthDiagram
 from main.MatrixesCalculator import MatrixesCalculator
 from main.Equations import Equations
-from main.Convers import Convers
+from main.RandomGenerator import RandomGenerator
 from tkinter import *
 
 
@@ -66,8 +66,10 @@ class App(Frame):
             width=self.width,
             height=self.height,
             description=True,
-            descriptionText='Это делает Саня',
-            activebackground='#00ff00'
+            descriptionText='Генератор рандомных числен\nдля разных' +
+                            'распределений',
+            activebackground='#00ff00',
+            command=self.createRandom
         )
         self.CalculatorSystemDigit = HoverButton(
             self.Buttons,
@@ -175,3 +177,7 @@ class App(Frame):
     def createConvers(self):
         self.newApp = Toplevel(self.parent)
         self.app = Convers(self.newApp, self.db)
+
+    def createRandom(self):
+        self.newApp = Toplevel(self.parent)
+        self.app = RandomGenerator(self.newApp)

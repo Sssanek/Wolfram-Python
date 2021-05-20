@@ -15,7 +15,8 @@ class TwoMatrix(Frame):
         self.parent = parent
         self.font30 = ("Courier", 30)
         self.font20 = ("Courier", 20)
-
+        self.push_color = '#cf34eb'
+        self.bg_color = '#00ace6'
         # Основной фрейм
         self.mainPart = Frame(self.parent)
         # Кнопка возврата назад
@@ -33,7 +34,7 @@ class TwoMatrix(Frame):
             self.mainPart,
             font=self.font30,
             text='Размерность матрицы: ',
-            bg='#00ace6'
+            bg=self.bg_color
         )
 
         self.mainPart.option_add("*TCombobox*Listbox*Font", self.font30)
@@ -55,7 +56,7 @@ class TwoMatrix(Frame):
             self.mainPart,
             font=self.font20,
             text='Рассчитать определитель\nматрицы',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=self.determinant
         )
 
@@ -63,7 +64,7 @@ class TwoMatrix(Frame):
             self.mainPart,
             font=self.font20,
             text='Рассчитать обратную\nматрицу',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=self.obratn
         )
 
@@ -71,7 +72,7 @@ class TwoMatrix(Frame):
             self.mainPart,
             font=self.font20,
             text='Рассчитать собственные\nчисла матрицы',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=self.sobstv_chisla
         )
 
@@ -79,7 +80,7 @@ class TwoMatrix(Frame):
             self.mainPart,
             font=self.font20,
             text='Рассчитать собственные\nвектора матрицы',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=self.sobstv_vectors
         )
 
@@ -87,7 +88,7 @@ class TwoMatrix(Frame):
             self.mainPart,
             font=self.font20,
             text='Разложение\nХолецкого',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=self.holetsky_razl
         )
 
@@ -95,7 +96,7 @@ class TwoMatrix(Frame):
             self.mainPart,
             font=self.font20,
             text='Спектральное\nразложение',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=self.spectr_razl
         )
 
@@ -134,8 +135,8 @@ class TwoMatrix(Frame):
 
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
-            wid.configure(bg='#00ace6')
-        self.parent["bg"] = '#00ace6'
+            wid.configure(bg=self.bg_color)
+        self.parent["bg"] = self.bg_color
         self.back["bg"] = "#e0e0e0"
 
         # Возврат назад
@@ -147,7 +148,7 @@ class TwoMatrix(Frame):
         self.matrix_part.destroy()
         self.my_matrix = []
         self.matrix_part = Frame(self.parent)
-        self.matrix_part["bg"] = '#00ace6'
+        self.matrix_part["bg"] = self.bg_color
         self.matrix_part.pack()
         if self.dimension.get() == '2 на 2':
             a = 2

@@ -84,7 +84,6 @@ class TruthDiagram(Frame):
                 variables.add(s)
             variables = sorted(list(variables))
             # Текстовое поле со скроллом
-            print(variables)
             self.createText()
             # Вывод переменных
             for i in variables:

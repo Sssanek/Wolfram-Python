@@ -12,6 +12,8 @@ class OneMatrix(Frame):
         self.font30 = ("Courier", 18)
         self.font20 = ("Courier", 13)
         self.dimensions = 'three'
+        self.push_color = '#cf34eb'
+        self.bg_color = '#00ace6'
 
         # Основной фрейм
         self.mainPart = Frame(self.parent)
@@ -30,38 +32,38 @@ class OneMatrix(Frame):
             self.mainPart,
             text="Базис состоит из ",
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.vectors = Label(
             self.mainPart,
             text=" векторов",
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.cordinates = Label(
             self.mainPart,
             text="Координаты (i, j, k)",
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.angle = Label(
             self.mainPart,
             text="Угол в градусах",
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.absolute = Label(
             self.mainPart,
             text="Модуль",
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         # информация по 1 вектору
         self.first_vector = Label(
             self.mainPart,
             text="1-ый вектор: ",
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.first_cord1 = Entry(self.mainPart, font=self.font20)
         self.first_cord2 = Entry(self.mainPart, font=self.font20)
@@ -73,7 +75,7 @@ class OneMatrix(Frame):
             self.mainPart,
             text="2-ой вектор: ",
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.second_cord1 = Entry(self.mainPart, font=self.font20)
         self.second_cord2 = Entry(self.mainPart, font=self.font20)
@@ -84,7 +86,7 @@ class OneMatrix(Frame):
             self.mainPart,
             font=("Courier", 15),
             text='Рассчитать скалярное произведение\nчерез координаты',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=lambda: self.scalar_coord_op()
         )
         self.scalar_angle = HoverButton(
@@ -92,7 +94,7 @@ class OneMatrix(Frame):
             font=("Courier", 15),
             text='Рассчитать скалярное произведение ' +
                  'через\nмодули векторов и угол между ними',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=lambda: self.scalar_angle_op()
         )
         self.vector_coord = HoverButton(
@@ -100,7 +102,7 @@ class OneMatrix(Frame):
             font=("Courier", 15),
             text='Рассчитать векторное произведение ' +
                  'через\nкоординаты векторов',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=lambda: self.vector_coord_op()
         )
         # вывод результата
@@ -108,7 +110,7 @@ class OneMatrix(Frame):
             self.mainPart,
             font=self.font30,
             text="Результат: ",
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.final_result = Label(
             self.mainPart,
@@ -125,7 +127,8 @@ class OneMatrix(Frame):
             variable=self.dim,
             value=1,
             font=self.font20,
-            bg='#00ace6',
+            bg=self.bg_color,
+            activebackground=self.push_color,
             command=lambda: self.disable(self.first_cord3, self.second_cord3))
         self.three = Radiobutton(
             self.mainPart,
@@ -133,7 +136,8 @@ class OneMatrix(Frame):
             variable=self.dim,
             value=0,
             font=self.font20,
-            bg='#00ace6',
+            bg=self.bg_color,
+            activebackground=self.push_color,
             command=lambda: self.undisable(
                 self.first_cord3,
                 self.second_cord3
@@ -170,8 +174,8 @@ class OneMatrix(Frame):
         self.parent.attributes('-fullscreen', True)
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
-            wid.configure(bg='#00ace6')
-        self.parent["bg"] = '#00ace6'
+            wid.configure(bg=self.bg_color)
+        self.parent["bg"] = self.bg_color
         self.back["bg"] = "#e0e0e0"
 
     # Возврат назад

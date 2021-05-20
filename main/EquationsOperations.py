@@ -2,15 +2,6 @@ from math import *
 import parser
 
 
-def digit_try_eps(n):
-    flag = False
-    try:
-        n = eval(n)
-    except ValueError or SyntaxError:
-        flag = True
-    return flag
-
-
 def digit_try(n):
     flag = False
     try:
@@ -29,12 +20,14 @@ def bisection_operation(a, b, epsilon, func):
         return 'Введите точность'
     if func == '':
         return 'Введите уравнение'
-    if digit_try(a) and digit_try(b):
+    if digit_try(a) or digit_try(b):
         return 'Границы должны быть числами'
     a, b = float(a), float(b)
-    if digit_try_eps(epsilon):
+    if digit_try(epsilon):
         return 'Точность должна быть числом'
-    epsilon = float(eval(epsilon))
+    epsilon = float(epsilon)
+    if epsilon < 0:
+        return 'Точность - положительная величина'
     if a == b:
         return 'Границы не должны совпадать'
     if a > b:
@@ -82,9 +75,11 @@ def newton_operation(func, x0, epsilon):
     if digit_try(x0):
         return 'Начальное значение должно быть числом'
     x0 = float(x0)
-    if digit_try_eps(epsilon):
+    if digit_try(epsilon):
         return 'Точность должна быть числом'
-    epsilon = float(eval(epsilon))
+    epsilon = float(epsilon)
+    if epsilon < 0:
+        return 'Точность - положительная величина'
     x = x0
     func = func.split('=')[0]
     func = func.replace('^', '**')

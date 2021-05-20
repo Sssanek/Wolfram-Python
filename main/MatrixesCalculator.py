@@ -10,7 +10,8 @@ class MatrixesCalculator(Frame):
         self.parent = parent
         self.font30 = ("Courier", 30)
         self.font20 = ("Courier", 20)
-
+        self.push_color = '#00ff00'
+        self.bg_color = '#00ace6'
         # Основной фрейм
         self.mainPart = Frame(self.parent)
         # Кнопка возврата назад
@@ -18,7 +19,7 @@ class MatrixesCalculator(Frame):
             self.parent,
             font=("Courier", 18),
             text='Назад',
-            activebackground='#00ff00',
+            activebackground=self.push_color,
             command=self.returnBack
         )
         self.back.pack(anchor=NW, padx=20, pady=20)
@@ -28,7 +29,7 @@ class MatrixesCalculator(Frame):
             self.mainPart,
             font=("Courier", 26),
             text='Операции с векторами',
-            activebackground='#00ff00',
+            activebackground=self.push_color,
             command=self.createOneMatrix
         )
         self.one.pack(expand=1, padx=20, pady=20)
@@ -38,7 +39,7 @@ class MatrixesCalculator(Frame):
             self.mainPart,
             font=("Courier", 26),
             text='Операции над матрицей',
-            activebackground='#00ff00',
+            activebackground=self.push_color,
             command=self.createTwoMatrix
         )
         self.two.pack(expand=1, padx=20, pady=20)
@@ -50,8 +51,8 @@ class MatrixesCalculator(Frame):
 
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
-            wid.configure(bg='#00ace6')
-        self.parent["bg"] = '#00ace6'
+            wid.configure(bg=self.bg_color)
+        self.parent["bg"] = self.bg_color
         self.back["bg"] = "#e0e0e0"
 
     # Возврат назад
