@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3465347c-820d-45db-9fb2-e8bb207272bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/main/RandomExport.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/RandomGenerator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/RandomOperations.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/ff.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/Convers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/EquationsOperations.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/EquationsOperations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/MatrixesCalculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/MatrixesCalculator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/OneMatrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/OneMatrix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/TruthDiagram.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/TruthDiagram.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/TwoMatrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/TwoMatrix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/mainApps.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/mainApps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/users.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/Equations.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/Equations.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

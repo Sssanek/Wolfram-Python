@@ -8,6 +8,8 @@ class Equations(Frame):
         self.parent = parent
         self.font30 = ("Courier", 30)
         self.font20 = ("Courier", 20)
+        self.push_color = '#cf34eb'
+        self.bg_color = '#00ace6'
 
         self.mainPart = Frame(self.parent)
         # Кнопка возврата назад
@@ -26,7 +28,7 @@ class Equations(Frame):
             self.mainPart,
             text="Введите уравнение вида f(x) = 0",
             font=self.font30,
-            bg='#00ace6'
+            bg=self.bg_color
         )
 
         # Поле для ввода выражения
@@ -56,45 +58,45 @@ class Equations(Frame):
             self.mainPart,
             text='Левая\nграница (a)',
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.lsecond = Label(
             self.mainPart,
             text='Правая\nграница (b)',
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.laccuracy = Label(
             self.mainPart,
             text='Точность ε',
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.lstart = Label(
             self.mainPart,
             text='Начальная\nточка x0',
             font=self.font20,
-            bg='#00ace6'
+            bg=self.bg_color
         )
         self.bisection = HoverButton(
             self.mainPart,
             font=("Courier", 24),
             text='Решить методом\nделения пополам',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=self.bisection_op
         )
         self.newton = HoverButton(
             self.mainPart,
             font=("Courier", 24),
             text='Решить методом\nНьютона',
-            activebackground='#cf34eb',
+            activebackground=self.push_color,
             command=self.newton_op
         )
         self.result = Label(
             self.mainPart,
             font=self.font30,
             text='Решения уравнения:',
-            bg='#00ace6'
+            bg=self.bg_color
         )
         # расположение виджетов на фрейме
         self.info.grid(row=0, column=0, columnspan=3)
@@ -115,8 +117,8 @@ class Equations(Frame):
         self.parent.attributes('-fullscreen', True)
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
-            wid.configure(bg='#00ace6')
-        self.parent["bg"] = '#00ace6'
+            wid.configure(bg=self.bg_color)
+        self.parent["bg"] = self.bg_color
         self.back["bg"] = "#e0e0e0"
 
     # Возврат назад
