@@ -4,6 +4,8 @@ from main.TruthDiagram import TruthDiagram
 from main.MatrixesCalculator import MatrixesCalculator
 from main.Equations import Equations
 from main.RandomGenerator import RandomGenerator
+from main.Convers import Convers
+from main.Calc import Calc
 from tkinter import *
 
 
@@ -56,8 +58,9 @@ class App(Frame):
             width=self.width,
             height=self.height,
             description=True,
-            descriptionText='Это делает Витя',
-            activebackground='#00ff00'
+            descriptionText='Арифметический калькулятор',
+            activebackground='#00ff00',
+            command=self.createCalc
         )
         self.RandomDigits = HoverButton(
             self.Buttons,
@@ -177,6 +180,10 @@ class App(Frame):
     def createConvers(self):
         self.newApp = Toplevel(self.parent)
         self.app = Convers(self.newApp, self.db)
+        
+    def createCalc(self):
+        self.newApp = Toplevel(self.parent)
+        self.app = Calc(self.newApp, self.db)
 
     def createRandom(self):
         self.newApp = Toplevel(self.parent)
