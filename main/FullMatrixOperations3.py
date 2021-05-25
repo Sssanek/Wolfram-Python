@@ -1,6 +1,7 @@
 from math import *
 
 
+# проверка на корректность введенных данных
 def digit_try(mas):
     flag = False
     for i, value in enumerate(mas):
@@ -11,6 +12,7 @@ def digit_try(mas):
     return flag
 
 
+# функция sign(), нужная для выполнения расчетов
 def sgn(x):
     if x > 0:
         return 1
@@ -20,10 +22,12 @@ def sgn(x):
         return 0
 
 
+# приведение к числовому типу
 def int_matrix(mas):
     return list(map(int, mas))
 
 
+# решение квадратного уравнения для поиска собственных чисел
 def count_sobstv_2(mas):
     d = (mas[0] + mas[3]) ** 2 - 4 * (mas[0] * mas[3] - mas[1] * mas[2])
     x1 = (mas[0] + mas[3] - d ** 0.5) / 2
@@ -31,6 +35,7 @@ def count_sobstv_2(mas):
     return round(x1, 2), round(x2, 2)
 
 
+# решение кубического уравнения для поиска собственных чисел
 def count_sobstv_3(mas):
     a = -1
     b = mas[0] + mas[4] + mas[8]
@@ -66,6 +71,7 @@ def count_sobstv_3(mas):
         return x1, x2
 
 
+# операция разложения Холецкого
 def holetsky_operation(matrix, dim):
     if dim == '2 на 2':
         if any([i == '' for i in matrix]):
@@ -119,6 +125,7 @@ def holetsky_operation(matrix, dim):
                str(l33) + '|'
 
 
+# поиск детерминанта матрицы по определению
 def determinant_operation(matrix, dim):
     if dim == '2 на 2':
         if any([i == '' for i in matrix]):
@@ -141,6 +148,7 @@ def determinant_operation(matrix, dim):
     return 'Что-то пошло не так'
 
 
+# поиск обратной матрицы по определению
 def obratn_operation(matrix, dim):
     if dim == '2 на 2':
         if any([i == '' for i in matrix]):
@@ -176,6 +184,7 @@ def obratn_operation(matrix, dim):
     return 'Что-то пошло не так'
 
 
+# поиск собственных чисел по определению
 def sobstv_chisla_operation(matrix, dim):
     if dim == '2 на 2':
         if any([i == '' for i in matrix]):

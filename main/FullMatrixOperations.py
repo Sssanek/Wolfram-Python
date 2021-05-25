@@ -1,6 +1,7 @@
 from math import *
 
 
+# функция sign(), нужная для выполнения расчетов
 def sgn(x):
     if x > 0:
         return 1
@@ -10,10 +11,12 @@ def sgn(x):
         return 0
 
 
+# функция, которая приводит все значения матрицы в численный тип
 def int_matrix(mas):
-    return list(map(int, mas))
+    return list(map(float, mas))
 
 
+# проверка значений, внесены ли числа
 def digit_try(mas):
     flag = False
     for i, value in enumerate(mas):
@@ -24,6 +27,7 @@ def digit_try(mas):
     return flag
 
 
+# функция для решения квадратного уравнения, позволяющее найти собственные числа матрицы
 def count_sobstv_2(mas):
     d = (mas[0] + mas[3]) ** 2 - 4 * (mas[0] * mas[3] - mas[1] * mas[2])
     x1 = (mas[0] + mas[3] - d ** 0.5) / 2
@@ -31,6 +35,7 @@ def count_sobstv_2(mas):
     return round(x1, 2), round(x2, 2)
 
 
+# решение кубического уравнения по тригонометрической формуле Виета для кубических уравнений
 def count_sobstv_3(mas):
     a = -1
     b = mas[0] + mas[4] + mas[8]
@@ -65,9 +70,11 @@ def count_sobstv_3(mas):
     else:
         return x1, x2
 
-
+# функция поиска собственных векторов матрицы
 def sobstv_vectors_operation(matrix, dim):
+    # ветка матрицы 2 на 2
     if dim == '2 на 2':
+        # проверка и приведение данных
         if any([i == '' for i in matrix]):
             return 'Введите значения во все поля'
         if digit_try(matrix):
@@ -75,8 +82,11 @@ def sobstv_vectors_operation(matrix, dim):
         matrix = int_matrix(matrix)
         x1, x2 = count_sobstv_2(matrix)
         flag = True
+        # в зависимости от решения квадратного уравнения и нахождения собственных чисел матрицы определяется решение
+        # системы уравнений для того, чтобы сформулировать собственный вектор
         A = matrix[0] - matrix[2] - x1
         B = matrix[1] - matrix[3] + x1
+        # значения вектора изначальна не определены
         y1, y2 = 'nan', 'nan'
         if (A == 0 and B != 0) or (A != 0 and B == 0):
             pass
@@ -106,7 +116,7 @@ def sobstv_vectors_operation(matrix, dim):
         else:
             return 'собственный вектор матрицы:\n' +\
                    '(' + str(round(y1, 2)) + ',' + str(round(y2, 2)) + ') '
-    # не сделано нихуя
+    # ветка 3 на 3
     elif dim == '3 на 3':
         if any([i == '' for i in matrix]):
             return 'Введите значения во все поля'
@@ -114,7 +124,10 @@ def sobstv_vectors_operation(matrix, dim):
             return 'Введите цифры в поля'
         matrix = int_matrix(matrix)
         x1, x2 = count_sobstv_3(matrix)
+        # аналогично значения вектора (здесь уже трехмерного)
         u1, u2, u3 = 0, 0, 0
+        # в зависимости от решений уравнения различные сценарии подсчета, вытекающие из решения системы путем
+        # подстановки некторых переменных
         if x2 == 'nan':
             flag = True
             a = (matrix[0] - x1 + matrix[3] + matrix[6])
@@ -216,6 +229,7 @@ def sobstv_vectors_operation(matrix, dim):
                         u2 = 1
                         u3 = - (a + b) / c
                         count += 1
+        # вывод результата
         if count == 0:
             return 'У матрицы нет собственных векторов'
         elif count == 1:

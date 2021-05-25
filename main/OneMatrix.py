@@ -194,6 +194,7 @@ class OneMatrix(Frame):
         n.config(state=NORMAL)
         self.dimensions = 'three'
 
+    # вызов операции скалярного произведения через координаты
     def scalar_coord_op(self):
         self.final_result['text'] = scalar_coord_operation(
             self.first_cord1.get(),
@@ -205,6 +206,7 @@ class OneMatrix(Frame):
             self.dimensions
         )
 
+    # вызов операции скалярного произведения через модули и угол
     def scalar_angle_op(self):
         self.final_result['text'] = scalar_angle_operation(
             self.first_absolute.get(),
@@ -212,6 +214,7 @@ class OneMatrix(Frame):
             self.first_angle.get()
         )
 
+    # вызов операции векторного произведения
     def vector_coord_op(self):
         self.final_result['text'] = vector_cord_operation(
             self.first_cord1.get(),

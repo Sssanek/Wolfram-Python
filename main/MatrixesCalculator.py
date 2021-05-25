@@ -59,10 +59,12 @@ class MatrixesCalculator(Frame):
     def returnBack(self):
         self.parent.destroy()
 
+    # функция, которая создает окно приложения с операциями над векторами
     def createOneMatrix(self):
         self.newApp = Toplevel(self.parent)
         self.app = OneMatrix(self.newApp)
 
+    # функция, которая создает окно приложения с операциями над матрицами
     def createTwoMatrix(self):
         self.newApp = Toplevel(self.parent)
         self.app = TwoMatrix(self.newApp)

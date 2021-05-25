@@ -23,14 +23,12 @@ class Equations(Frame):
         self.back.pack(anchor=NW, padx=20, pady=20)
         # ставлю основной фрейм, чтобы далее работать на нем
         self.mainPart.pack()
-
         self.info = Label(
             self.mainPart,
             text="Введите уравнение вида f(x) = 0",
             font=self.font30,
             bg=self.bg_color
         )
-
         # Поле для ввода выражения
         self.inputField = EntryWithPlaceholder(
             self.mainPart,
@@ -38,6 +36,7 @@ class Equations(Frame):
             font=('Courier', 40),
             width=30
         )
+        # поля для ввода параметров поиска решения
         self.first = Entry(
             self.mainPart,
             font=self.font20,
@@ -78,6 +77,7 @@ class Equations(Frame):
             font=self.font20,
             bg=self.bg_color
         )
+        # кнопки выполнения операций
         self.bisection = HoverButton(
             self.mainPart,
             font=("Courier", 24),
@@ -125,6 +125,7 @@ class Equations(Frame):
     def returnBack(self):
         self.parent.destroy()
 
+    # функции для вызова логических функций из другого файла
     def bisection_op(self):
         self.result['text'] = 'Подсчет результата...'
         self.result['text'] = bisection_operation(

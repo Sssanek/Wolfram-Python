@@ -28,8 +28,7 @@ class RandomGenerator(Frame):
             command=self.return_back
         )
         self.back.pack(anchor=NW, padx=20, pady=20)
-
-        # равномерное распределение
+        # равномерное распределение (соответствующие виджеты)
         self.l_ravn = Label(
             self.mainPart,
             text="Равномерное распределение\na <= n <= b",
@@ -62,7 +61,7 @@ class RandomGenerator(Frame):
             activebackground=self.push_color,
             command=lambda: self.ravn_to_csv()
         )
-        # нормальное распределение
+        # нормальное распределение (соответствующие виджеты)
         self.l_norm = Label(
             self.mainPart,
             text='Нормальное распределение',
@@ -95,7 +94,7 @@ class RandomGenerator(Frame):
             activebackground=self.push_color,
             command=lambda: self.norm_to_csv()
         )
-        # логарифм нормального распределения
+        # логарифм нормального распределения (соответствующие виджеты)
         self.l_lognorm = Label(
             self.mainPart,
             text='Логарифм нормального распределения',
@@ -128,7 +127,7 @@ class RandomGenerator(Frame):
             activebackground=self.push_color,
             command=lambda: self.log_to_csv()
         )
-        # бета распределение
+        # бета распределение (соответствующие виджеты)
         self.l_beta = Label(
             self.mainPart,
             text='Бета распределение (от 0 до 1)',
@@ -161,7 +160,7 @@ class RandomGenerator(Frame):
             activebackground=self.push_color,
             command=lambda: self.beta_to_csv()
         )
-        # экспоненциальное распределение
+        # экспоненциальное распределение (соответствующие виджеты)
         self.l_exp = Label(
             self.mainPart,
             text='Экспоненциальное распределение\n(от 0 до +∞, если λ>0 '
@@ -189,7 +188,7 @@ class RandomGenerator(Frame):
             activebackground=self.push_color,
             command=lambda: self.exp_to_csv()
         )
-        # распределение Гаусса
+        # распределение Гаусса (соответствующие виджеты)
         self.l_gauss = Label(
             self.mainPart,
             text='Распределение Гаусса',
@@ -222,7 +221,7 @@ class RandomGenerator(Frame):
             activebackground=self.push_color,
             command=lambda: self.gauss_to_csv()
         )
-        # вся информация про выгрузку csv
+        # вся информация про выгрузку csv (соответствующие виджеты)
         self.csv_info = Label(
             self.mainPart,
             text='Данные для выгрузки в csv:',
@@ -318,6 +317,7 @@ class RandomGenerator(Frame):
     def return_back(self):
         self.parent.destroy()
 
+    # функции для вызова логических функций из другого файла
     def generate_ravn(self):
         self.result['text'] = one_ravn(self.a_ravn.get(),
                                        self.b_ravn.get())
@@ -341,11 +341,13 @@ class RandomGenerator(Frame):
         self.result['text'] = one_gauss(self.x_gauss.get(),
                                         self.dx_gauss.get())
 
+    # экспорт рандомных чисел происходит через отдельное окошко
     def ravn_to_csv(self):
         self.result['text'] = export_ravn(self.num_rows.get(),
                                           self.num_cols.get(),
                                           self.a_ravn.get(),
                                           self.b_ravn.get())
+        # возвращаем обратно на окно приложения
         self.mainPart.focus_set()
 
     def norm_to_csv(self):

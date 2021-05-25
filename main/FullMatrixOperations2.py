@@ -1,6 +1,7 @@
 from math import *
 
 
+# функция sign(), нужная для выполнения расчетов
 def sgn(x):
     if x > 0:
         return 1
@@ -10,10 +11,12 @@ def sgn(x):
         return 0
 
 
+# приведение к числовому типу
 def int_matrix(mas):
-    return list(map(int, mas))
+    return list(map(float, mas))
 
 
+# проверка на корректность введенных данных
 def digit_try(mas):
     flag = False
     for i, value in enumerate(mas):
@@ -24,6 +27,7 @@ def digit_try(mas):
     return flag
 
 
+# собственные числа матрицы 2 на 2
 def count_sobstv_2(mas):
     d = (mas[0] + mas[3]) ** 2 - 4 * (mas[0] * mas[3] - mas[1] * mas[2])
     x1 = (mas[0] + mas[3] - d ** 0.5) / 2
@@ -31,6 +35,7 @@ def count_sobstv_2(mas):
     return round(x1, 2), round(x2, 2)
 
 
+# собственные числа матрицы 3 на 3 по формуле Виета
 def count_sobstv_3(mas):
     a = -1
     b = mas[0] + mas[4] + mas[8]
@@ -66,12 +71,16 @@ def count_sobstv_3(mas):
         return x1, x2
 
 
+# функция спектрального разложения - [собственный вектор] х [еденичная матрица с собственными числами]
 def spectr_razl_operation(matrix, dim):
+    # ветка матрицы 2 на 2
     if dim == '2 на 2':
+        # проверка и приведение данных
         if any([i == '' for i in matrix]):
             return 'Введите значения во все поля'
         if digit_try(matrix):
             return 'Введите цифры в поля'
+        # поиск компонент
         matrix = int_matrix(matrix)
         det = matrix[0] * matrix[3] - matrix[2] * matrix[1]
         if det == 0:
@@ -118,12 +127,15 @@ def spectr_razl_operation(matrix, dim):
                    '|\n' + '|' + str(round(y2, 2)) + '| ' + '|0 ' \
                    + str(x1) + '| ' + '|' + str(matrix_priv[1]) + ' ' + \
                    str(matrix_priv[3]) + '|'
+    # ветка матрицы 3 на 3
     elif dim == '3 на 3':
+        # проверка и приведение данных
         if any([i == '' for i in matrix]):
             return 'Введите значения во все поля'
         if digit_try(matrix):
             return 'Введите цифры в поля'
         matrix = int_matrix(matrix)
+        # поиск компонент
         det = matrix[0] * (matrix[4] * matrix[8] - matrix[5] * matrix[7]) \
             - matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) \
             + matrix[2] * (matrix[3] * matrix[7] - matrix[6] * matrix[4])
