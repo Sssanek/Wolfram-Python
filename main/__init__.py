@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from main.database import DB
 from main.mainApps import App
 from main.Registration import Registr
@@ -86,9 +87,8 @@ class Authentication(Frame):
         if self.loggined:
             self.parent.destroy()
             self.parent = Tk()
-            self.app = App(self.parent, self.db)
+            self.app = App(self.parent, self.db, self.User)
             self.parent.resizable(width=False, height=False)
-            self.parent.attributes('-fullscreen', True)
             self.parent.mainloop()
         else:
             messagebox.showerror(

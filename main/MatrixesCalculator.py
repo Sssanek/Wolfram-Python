@@ -5,13 +5,16 @@ from main.TwoMatrix import TwoMatrix
 
 
 class MatrixesCalculator(Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, db, user):
         # Объявление переменных
         self.parent = parent
+        self.db = db
+        self.user = user
         self.font30 = ("Courier", 30)
         self.font20 = ("Courier", 20)
-        self.push_color = '#00ff00'
-        self.bg_color = '#00ace6'
+        self.push_color = self.db.activeColor(self.user)
+        self.bg_color = self.db.bg_color(self.user)
+        self.windowSize = self.db.windowSize(self.user)
         # Основной фрейм
         self.mainPart = Frame(self.parent)
         # Кнопка возврата назад
@@ -47,7 +50,10 @@ class MatrixesCalculator(Frame):
         self.mainPart.pack()
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-fullscreen', True)
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
 
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
@@ -62,9 +68,9 @@ class MatrixesCalculator(Frame):
     # функция, которая создает окно приложения с операциями над векторами
     def createOneMatrix(self):
         self.newApp = Toplevel(self.parent)
-        self.app = OneMatrix(self.newApp)
+        self.app = OneMatrix(self.newApp, self.db, self.user)
 
     # функция, которая создает окно приложения с операциями над матрицами
     def createTwoMatrix(self):
         self.newApp = Toplevel(self.parent)
-        self.app = TwoMatrix(self.newApp)
+        self.app = TwoMatrix(self.newApp, self.db, self.user)

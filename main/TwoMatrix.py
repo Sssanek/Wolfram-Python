@@ -1,5 +1,5 @@
 from tkinter import *
-from main.styledWidgets import EntryWithPlaceholder, HoverButton
+from main.styledWidgets import HoverButton
 from tkinter import ttk
 from main.FullMatrixOperations3 import determinant_operation
 from main.FullMatrixOperations3 import obratn_operation
@@ -10,13 +10,16 @@ from main.FullMatrixOperations3 import holetsky_operation
 
 
 class TwoMatrix(Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, db, user):
         # Объявление переменных
         self.parent = parent
+        self.db = db
+        self.user = user
         self.font30 = ("Courier", 30)
         self.font20 = ("Courier", 20)
-        self.push_color = '#cf34eb'
-        self.bg_color = '#00ace6'
+        self.push_color = self.db.activeColor(self.user)
+        self.bg_color = self.db.bg_color(self.user)
+        self.windowSize = self.db.windowSize(self.user)
         # Основной фрейм
         self.mainPart = Frame(self.parent)
         # Кнопка возврата назад
@@ -24,7 +27,7 @@ class TwoMatrix(Frame):
             self.parent,
             font=("Courier", 18),
             text='Назад',
-            activebackground='#00ff00',
+            activebackground=self.push_color,
             command=self.returnBack
         )
         # еще один фрейм на котором будут расположены поля для ввода матрицы
@@ -120,7 +123,10 @@ class TwoMatrix(Frame):
 
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-fullscreen', True)
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
 
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
@@ -128,7 +134,7 @@ class TwoMatrix(Frame):
         self.parent["bg"] = self.bg_color
         self.back["bg"] = "#e0e0e0"
 
-        # Возврат назад
+    # Возврат назад
     def returnBack(self):
         self.parent.destroy()
 

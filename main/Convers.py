@@ -5,19 +5,24 @@ from main.conversValues import *
 
 
 class Convers(Frame):
-    def __init__(self, parent, db):
+    def __init__(self, parent, db, user):
 
         # Задание основных переменных
         self.parent = parent
         self.db = db
+        self.user = user
+        self.bg_color = self.db.bg_color(self.user)
+        self.fontCourier = ("Courier", 18)
+        self.activeColor = self.db.activeColor(self.user)
+        self.windowSize = self.db.windowSize(self.user)
         v = values()
 
         # Кнопка возврата назад
         self.back = HoverButton(
             self.parent,
-            font=("Courier", 18),
+            font=self.fontCourier,
             text='Назад',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.returnBack
         )
         self.back.pack(anchor=NW, padx=20, pady=20)
@@ -26,7 +31,7 @@ class Convers(Frame):
         self.mainPart = Frame(self.parent)
 
         # Создаем переводчик величин времени
-        self.Label_time = Label(self.mainPart, font=("Courier", 18),
+        self.Label_time = Label(self.mainPart, font=self.fontCourier,
                                 text='Перевод величин времени')
         self.Label_time.grid(row=0, column=0, columnspan=5, stick='we')
 
@@ -40,7 +45,7 @@ class Convers(Frame):
         self.entry_time.grid(row=1, column=0)
         self.entry_time.insert(0, '0')
 
-        self.combo_time1 = ttk.Combobox(self.mainPart, values=time, font=(2))
+        self.combo_time1 = ttk.Combobox(self.mainPart, values=time)
         self.combo_time1.current(0)
         self.combo_time1.set('выберите значение>')
         self.combo_time1.grid(row=1, column=1, stick='wens')
@@ -74,13 +79,13 @@ class Convers(Frame):
         self.mainPart.grid_columnconfigure(2, minsize=20)
 
         self.outry_time = Entry(self.mainPart, justify=RIGHT,
-                                font=('Comic Sans', 15), width=25)
+                                font=('Comic Sans', 15), width=20)
         self.outry_time.insert(0, '0')
         self.outry_time['state'] = DISABLED
         self.outry_time.grid(row=1, column=3, stick='we')
         self.mainPart.grid_columnconfigure(3, minsize=20)
 
-        self.combo_time2 = ttk.Combobox(self.mainPart, values=time, font=(2))
+        self.combo_time2 = ttk.Combobox(self.mainPart, values=time)
         self.combo_time2.current(0)
         self.combo_time2.set('выберите значение>')
         self.combo_time2.grid(row=1, column=4, stick='wens')
@@ -101,7 +106,7 @@ class Convers(Frame):
         self.entry_bar.grid(row=1, column=6)
         self.entry_bar.insert(0, '0')
 
-        self.combo_bar1 = ttk.Combobox(self.mainPart, values=bar, font=(2))
+        self.combo_bar1 = ttk.Combobox(self.mainPart, values=bar)
         self.combo_bar1.current(0)
         self.combo_bar1.set('выберите значение>')
         self.combo_bar1.grid(row=1, column=7, stick='wens')
@@ -121,13 +126,13 @@ class Convers(Frame):
         self.mainPart.grid_columnconfigure(8, minsize=20)
 
         self.outry_bar = Entry(self.mainPart, justify=RIGHT,
-                               font=('Comic Sans', 15), width=25)
+                               font=('Comic Sans', 15), width=20)
         self.outry_bar.insert(0, '0')
         self.outry_bar['state'] = DISABLED
         self.outry_bar.grid(row=1, column=9, stick='we')
         self.mainPart.grid_columnconfigure(9, minsize=20)
 
-        self.combo_bar2 = ttk.Combobox(self.mainPart, values=bar, font=(2))
+        self.combo_bar2 = ttk.Combobox(self.mainPart, values=bar)
         self.combo_bar2.current(0)
         self.combo_bar2.set('выберите значение>')
         self.combo_bar2.grid(row=1, column=10, stick='wens')
@@ -150,7 +155,7 @@ class Convers(Frame):
         self.entry_length.insert(0, '0')
 
         self.combo_length1 = ttk.Combobox(self.mainPart, values=length,
-                                          font=(2))
+                                        )
         self.combo_length1.current(0)
         self.combo_length1.set('выберите значение>')
         self.combo_length1.grid(row=4, column=1, stick='wens')
@@ -200,19 +205,19 @@ class Convers(Frame):
         self.run_length.grid(row=4, column=2, stick='wens')
 
         self.outry_length = Entry(self.mainPart, justify=RIGHT,
-                                  font=('Comic Sans', 15), width=25)
+                                  font=('Comic Sans', 15), width=20)
         self.outry_length.insert(0, '0')
         self.outry_length['state'] = DISABLED
         self.outry_length.grid(row=4, column=3, stick='we')
 
         self.combo_length2 = ttk.Combobox(self.mainPart, values=length,
-                                          font=(2))
+                                        )
         self.combo_length2.current(0)
         self.combo_length2.set('выберите значение>')
         self.combo_length2.grid(row=4, column=4, stick='wens')
 
         # Создаем переводчик величин массы
-        self.Label_weigth = Label(self.mainPart, font=("Courier", 18),
+        self.Label_weigth = Label(self.mainPart, font=self.fontCourier,
                                   text='Перевод величин массы')
         self.Label_weigth.grid(row=3, column=6, columnspan=5, stick='we')
 
@@ -227,7 +232,7 @@ class Convers(Frame):
         self.entry_weigth.insert(0, '0')
 
         self.combo_weigth1 = ttk.Combobox(self.mainPart, values=weigth,
-                                          font=(2))
+                                        )
         self.combo_weigth1.current(0)
         self.combo_weigth1.set('выберите значение>')
         self.combo_weigth1.grid(row=4, column=7, stick='wens')
@@ -256,13 +261,13 @@ class Convers(Frame):
         self.run_weigth.grid(row=4, column=8, stick='wens')
 
         self.outry_weigth = Entry(self.mainPart, justify=RIGHT,
-                                  font=('Comic Sans', 15), width=25)
+                                  font=('Comic Sans', 15), width=20)
         self.outry_weigth.insert(0, '0')
         self.outry_weigth['state'] = DISABLED
         self.outry_weigth.grid(row=4, column=9, stick='we')
 
         self.combo_weigth2 = ttk.Combobox(self.mainPart, values=weigth,
-                                          font=(2))
+                                        )
         self.combo_weigth2.current(0)
         self.combo_weigth2.set('выберите значение>')
         self.combo_weigth2.grid(row=4, column=10, stick='wens')
@@ -270,7 +275,7 @@ class Convers(Frame):
         self.mainPart.grid_rowconfigure(5, minsize=80)
 
         # Создаем переводчик величин объёма
-        self.Label_volume = Label(self.mainPart, font=("Courier", 18),
+        self.Label_volume = Label(self.mainPart, font=self.fontCourier,
                                   text='Перевод величин объёма')
         self.Label_volume.grid(row=6, column=0, columnspan=5, stick='we')
 
@@ -285,7 +290,7 @@ class Convers(Frame):
         self.entry_volume.insert(0, '0')
 
         self.combo_volume1 = ttk.Combobox(self.mainPart, values=volume,
-                                          font=(2))
+                                        )
         self.combo_volume1.current(0)
         self.combo_volume1.set('выберите значение>')
         self.combo_volume1.grid(row=7, column=1, stick='wens')
@@ -308,19 +313,19 @@ class Convers(Frame):
         self.run_volume.grid(row=7, column=2, stick='wens')
 
         self.outry_volume = Entry(self.mainPart, justify=RIGHT,
-                                  font=('Comic Sans', 15), width=25)
+                                  font=('Comic Sans', 15), width=20)
         self.outry_volume.insert(0, '0')
         self.outry_volume['state'] = DISABLED
         self.outry_volume.grid(row=7, column=3, stick='we')
 
         self.combo_volume2 = ttk.Combobox(self.mainPart, values=volume,
-                                          font=(2))
+                                        )
         self.combo_volume2.current(0)
         self.combo_volume2.set('выберите значение>')
         self.combo_volume2.grid(row=7, column=4, stick='wens')
 
         # Создаем переводчик величин площади
-        self.Label_area = Label(self.mainPart, font=("Courier", 18),
+        self.Label_area = Label(self.mainPart, font=self.fontCourier,
                                 text='Перевод величин площади')
         self.Label_area.grid(row=6, column=6, columnspan=5, stick='we')
 
@@ -334,7 +339,7 @@ class Convers(Frame):
         self.entry_area.grid(row=7, column=6)
         self.entry_area.insert(0, '0')
 
-        self.combo_area1 = ttk.Combobox(self.mainPart, values=area, font=(2))
+        self.combo_area1 = ttk.Combobox(self.mainPart, values=area)
         self.combo_area1.current(0)
         self.combo_area1.set('выберите значение>')
         self.combo_area1.grid(row=7, column=7, stick='wens')
@@ -355,12 +360,12 @@ class Convers(Frame):
         self.run_area.grid(row=7, column=8, stick='wens')
 
         self.outry_area = Entry(self.mainPart, justify=RIGHT,
-                                font=('Comic Sans', 15), width=25)
+                                font=('Comic Sans', 15), width=20)
         self.outry_area.insert(0, '0')
         self.outry_area['state'] = DISABLED
         self.outry_area.grid(row=7, column=9, stick='we')
 
-        self.combo_area2 = ttk.Combobox(self.mainPart, values=area, font=(2))
+        self.combo_area2 = ttk.Combobox(self.mainPart, values=area)
         self.combo_area2.current(0)
         self.combo_area2.set('выберите значение>')
         self.combo_area2.grid(row=7, column=10, stick='wens')
@@ -368,7 +373,7 @@ class Convers(Frame):
         self.mainPart.grid_rowconfigure(8, minsize=80)
 
         # Создаем переводчик величин скорости
-        self.Label_speed = Label(self.mainPart, font=("Courier", 18),
+        self.Label_speed = Label(self.mainPart, font=self.fontCourier,
                                  text='Перевод величин скорости')
         self.Label_speed.grid(row=9, column=0, columnspan=5, stick='we')
 
@@ -383,7 +388,7 @@ class Convers(Frame):
         self.entry_speed.insert(0, '0')
 
         self.combo_speed1 = ttk.Combobox(self.mainPart, values=speed,
-                                         font=(2))
+                                       )
         self.combo_speed1.current(0)
         self.combo_speed1.set('выберите значение>')
         self.combo_speed1.grid(row=10, column=1, stick='wens')
@@ -407,19 +412,19 @@ class Convers(Frame):
         self.run_speed.grid(row=10, column=2, stick='wens')
 
         self.outry_speed = Entry(self.mainPart, justify=RIGHT,
-                                 font=('Comic Sans', 15), width=25)
+                                 font=('Comic Sans', 15), width=20)
         self.outry_speed.insert(0, '0')
         self.outry_speed['state'] = DISABLED
         self.outry_speed.grid(row=10, column=3, stick='we')
 
         self.combo_speed2 = ttk.Combobox(self.mainPart, values=speed,
-                                         font=(2))
+                                       )
         self.combo_speed2.current(0)
         self.combo_speed2.set('выберите значение>')
         self.combo_speed2.grid(row=10, column=4, stick='wens')
 
         # Создаем переводчик величин температуры
-        self.Label_temp = Label(self.mainPart, font=("Courier", 18),
+        self.Label_temp = Label(self.mainPart, font=self.fontCourier,
                                 text='Перевод величин температуры')
         self.Label_temp.grid(row=9, column=6, columnspan=5, stick='we')
 
@@ -432,7 +437,7 @@ class Convers(Frame):
         self.entry_temp.grid(row=10, column=6)
         self.entry_temp.insert(0, '0')
 
-        self.combo_temp1 = ttk.Combobox(self.mainPart, values=temp, font=(2))
+        self.combo_temp1 = ttk.Combobox(self.mainPart, values=temp)
         self.combo_temp1.current(0)
         self.combo_temp1.set('выберите значение>')
         self.combo_temp1.grid(row=10, column=7, stick='wens')
@@ -449,12 +454,12 @@ class Convers(Frame):
         self.run_temp.grid(row=10, column=8, stick='wens')
 
         self.outry_temp = Entry(self.mainPart, justify=RIGHT,
-                                font=('Comic Sans', 15), width=25)
+                                font=('Comic Sans', 15), width=20)
         self.outry_temp.insert(0, '0')
         self.outry_temp['state'] = DISABLED
         self.outry_temp.grid(row=10, column=9, stick='we')
 
-        self.combo_temp2 = ttk.Combobox(self.mainPart, values=temp, font=(2))
+        self.combo_temp2 = ttk.Combobox(self.mainPart, values=temp)
         self.combo_temp2.current(0)
         self.combo_temp2.set('выберите значение>')
         self.combo_temp2.grid(row=10, column=10, stick='wens')
@@ -462,7 +467,7 @@ class Convers(Frame):
         self.mainPart.grid_rowconfigure(11, minsize=80)
 
         # Создаем переводчик величин энергии
-        self.Label_energy = Label(self.mainPart, font=("Courier", 18),
+        self.Label_energy = Label(self.mainPart, font=self.fontCourier,
                                   text='Перевод величин энергии')
         self.Label_energy.grid(row=12, column=0, columnspan=5, stick='we')
 
@@ -476,7 +481,7 @@ class Convers(Frame):
         self.entry_energy.insert(0, '0')
 
         self.combo_energy1 = ttk.Combobox(self.mainPart, values=energy,
-                                          font=(2))
+                                        )
         self.combo_energy1.current(0)
         self.combo_energy1.set('выберите значение>')
         self.combo_energy1.grid(row=13, column=1, stick='wens')
@@ -495,13 +500,12 @@ class Convers(Frame):
         self.run_energy.grid(row=13, column=2, stick='wens')
 
         self.outry_energy = Entry(self.mainPart, justify=RIGHT,
-                                  font=('Comic Sans', 15), width=25)
+                                  font=('Comic Sans', 15), width=20)
         self.outry_energy.insert(0, '0')
         self.outry_energy['state'] = DISABLED
         self.outry_energy.grid(row=13, column=3, stick='we')
 
-        self.combo_energy2 = ttk.Combobox(self.mainPart, values=energy,
-                                          font=(2))
+        self.combo_energy2 = ttk.Combobox(self.mainPart, values=energy)
         self.combo_energy2.current(0)
         self.combo_energy2.set('выберите значение>')
         self.combo_energy2.grid(row=13, column=4, stick='wens')
@@ -511,11 +515,14 @@ class Convers(Frame):
 
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-fullscreen', True)
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
-            wid.configure(bg='#00ace6')
-        self.parent["bg"] = '#00ace6'
+            wid.configure(bg=self.bg_color)
+        self.parent["bg"] = self.bg_color
         self.back["bg"] = "#e0e0e0"
 
     # Возврат назад

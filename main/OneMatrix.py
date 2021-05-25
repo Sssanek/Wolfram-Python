@@ -6,14 +6,17 @@ from main.OneMatrixOperations import vector_cord_operation
 
 
 class OneMatrix(Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, db, user):
         # Объявление переменных
         self.parent = parent
+        self.db = db
+        self.user = user
         self.font30 = ("Courier", 18)
         self.font20 = ("Courier", 13)
         self.dimensions = 'three'
-        self.push_color = '#cf34eb'
-        self.bg_color = '#00ace6'
+        self.push_color = self.db.activeColor(self.user)
+        self.bg_color = self.db.bg_color(self.user)
+        self.windowSize = self.db.windowSize(self.user)
 
         # Основной фрейм
         self.mainPart = Frame(self.parent)
@@ -23,7 +26,7 @@ class OneMatrix(Frame):
             self.parent,
             font=("Courier", 18),
             text='Назад',
-            activebackground='#00ff00',
+            activebackground=self.push_color,
             command=self.return_back
         )
         self.back.pack(anchor=NW, padx=20, pady=20)
@@ -171,7 +174,10 @@ class OneMatrix(Frame):
         self.final_result.grid(row=7, column=0, columnspan=2, pady=10)
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-fullscreen', True)
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
             wid.configure(bg=self.bg_color)

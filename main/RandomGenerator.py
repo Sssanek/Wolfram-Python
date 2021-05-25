@@ -7,14 +7,17 @@ from main.RandomExport import export_beta, export_exp, export_gauss
 
 
 class RandomGenerator(Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, db, user):
         # Объявление переменных
         self.parent = parent
-        self.font30 = ("Courier", 30)
-        self.font20 = ("Courier", 20)
+        self.font30 = ("Courier", 20)
+        self.font20 = ("Courier", 15)
         self.dimensions = 'three'
-        self.push_color = '#cf34eb'
-        self.bg_color = '#00ace6'
+        self.db = db
+        self.user = user
+        self.bg_color = self.db.bg_color(self.user)
+        self.push_color = self.db.activeColor(self.user)
+        self.windowSize = self.db.windowSize(self.user)
         self.width = 22
         # Основной фрейм
         self.mainPart = Frame(self.parent)
@@ -24,7 +27,7 @@ class RandomGenerator(Frame):
             self.parent,
             font=("Courier", 18),
             text='Назад',
-            activebackground='#00ff00',
+            activebackground=self.push_color,
             command=self.return_back
         )
         self.back.pack(anchor=NW, padx=20, pady=20)
@@ -306,7 +309,10 @@ class RandomGenerator(Frame):
                          rowspan=2)
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-fullscreen', True)
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
             wid.configure(bg=self.bg_color)

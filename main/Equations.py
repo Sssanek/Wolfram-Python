@@ -4,12 +4,15 @@ from main.EquationsOperations import bisection_operation, newton_operation
 
 
 class Equations(Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, db, user):
         self.parent = parent
         self.font30 = ("Courier", 30)
         self.font20 = ("Courier", 20)
-        self.push_color = '#cf34eb'
-        self.bg_color = '#00ace6'
+        self.db = db
+        self.user = user
+        self.push_color = self.db.activeColor(self.user)
+        self.bg_color = self.db.bg_color(self.user)
+        self.windowSize = self.db.windowSize(self.user)
 
         self.mainPart = Frame(self.parent)
         # Кнопка возврата назад
@@ -17,7 +20,7 @@ class Equations(Frame):
             self.parent,
             font=("Courier", 18),
             text='Назад',
-            activebackground='#00ff00',
+            activebackground=self.push_color,
             command=self.returnBack
         )
         self.back.pack(anchor=NW, padx=20, pady=20)
@@ -114,7 +117,10 @@ class Equations(Frame):
         self.result.grid(row=5, column=0, columnspan=3, pady=10, padx=10)
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-fullscreen', True)
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
             wid.configure(bg=self.bg_color)

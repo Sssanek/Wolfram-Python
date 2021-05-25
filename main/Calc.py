@@ -10,20 +10,23 @@ class FactError(Exception):
 
 
 class Calc(Frame):
-    def __init__(self, parent, db):
+    def __init__(self, parent, db, user):
 
         # Задание основных переменных
         self.parent = parent
         self.db = db
+        self.user = user
+        self.bg_color = self.db.bg_color(self.user)
         self.digitColor = 'black'
         self.operationColor = 'red'
+        self.windowSize = self.db.windowSize(self.user)
 
         # Кнопка возврата назад
         self.back = HoverButton(
             self.parent,
             font=("Courier", 18),
             text='Назад',
-            activebackground='#00ff00',
+            activebackground=self.db.activeColor(self.user),
             command=self.returnBack
         )
         self.back.pack(anchor=NW, padx=20, pady=20)
@@ -207,12 +210,15 @@ class Calc(Frame):
 
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-fullscreen', True)
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
 
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
-            wid.configure(bg='#00ace6')
-        self.parent["bg"] = '#00ace6'
+            wid.configure(bg=self.bg_color)
+        self.parent["bg"] = self.bg_color
         self.back["bg"] = "#e0e0e0"
 
     # Возврат назад

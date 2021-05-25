@@ -6,18 +6,23 @@ from main.Equations import Equations
 from main.RandomGenerator import RandomGenerator
 from main.Convers import Convers
 from main.Calc import Calc
+from main.settings import Settings
 from tkinter import *
 
 
 # Окно с приложениями
 class App(Frame):
-    def __init__(self, parent, db):
+    def __init__(self, parent, db, user):
         # Объявление переменных
         self.parent = parent
         self.db = db
         self.width = 28
         self.height = 3
+        self.user = user
+        self.bg_color = self.db.bg_color(self.user)
+        self.windowSize = self.db.windowSize(self.user)
         self.font = ("Courier", 30)
+        self.activeColor = self.db.activeColor(self.user)
 
         # Создание структуры окна
         # Надпись
@@ -37,7 +42,7 @@ class App(Frame):
             description=True,
             descriptionText='Решение нелинейных уравнений\n-методом деления '
                             'пополам\n-методом Ньютона',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.createEquations
         )
         self.MatrixCalculator = HoverButton(
@@ -48,7 +53,7 @@ class App(Frame):
             height=self.height,
             description=True,
             descriptionText='Различные операции с \nодной или двумя матрицами',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.createMatrixesCalculator
         )
         self.Calculator = HoverButton(
@@ -58,8 +63,8 @@ class App(Frame):
             width=self.width,
             height=self.height,
             description=True,
-            descriptionText='Арифметический калькулятор',
-            activebackground='#00ff00',
+            descriptionText='Приложение для арифметических вычислений',
+            activebackground=self.activeColor,
             command=self.createCalc
         )
         self.RandomDigits = HoverButton(
@@ -69,9 +74,9 @@ class App(Frame):
             width=self.width,
             height=self.height,
             description=True,
-            descriptionText='Генератор рандомных числен\nдля разных' +
+            descriptionText='Генератор рандомных чисел \nдля разных' +
                             'распределений',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.createRandom
         )
         self.CalculatorSystemDigit = HoverButton(
@@ -83,7 +88,7 @@ class App(Frame):
             description=True,
             descriptionText='Калькулятор для перевода чисел\
 \n из любых систем счисления в любые другие',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.createCalculatorSystemDigit
         )
         self.CalculatorSystemUnits = HoverButton(
@@ -95,7 +100,7 @@ class App(Frame):
             description=True,
             descriptionText='Калькулятор для перевода величин\
 \n из одних систем единиц в другие',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.createConvers
         )
         self.TruthDiagram = HoverButton(
@@ -107,7 +112,7 @@ class App(Frame):
             description=True,
             descriptionText='Приложение для построения таблиц\
 \n истинности выражений',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.createTruthDiagram
         )
         self.configs = HoverButton(
@@ -117,8 +122,9 @@ class App(Frame):
             width=self.width,
             height=self.height,
             description=True,
-            descriptionText="Потом сделаю",
-            activebackground='#00ff00'
+            descriptionText="Настройки приложения",
+            activebackground=self.activeColor,
+            command=self.settings
         )
         # Раположение кнопок в сетку
         self.Equation.grid(row=0, column=0, padx=(50, 30), pady=10)
@@ -143,18 +149,23 @@ class App(Frame):
         self.label.pack()
         self.Buttons.pack()
         # Изменение цвета
-        self.parent['bg'] = '#00ace6'
+        self.parent['bg'] = self.bg_color
         for wid in self.parent.winfo_children():
-            wid.configure(bg='#00ace6')
+            wid.configure(bg=self.bg_color)
         # Кнопка выхода
         self.exit = HoverButton(
             self.parent,
             font=("Courier", 20),
             text='Выход',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.close
         )
         self.exit.pack(anchor=NE, padx=20, pady=20)
+
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
 
     # Кнопка выхода
     def close(self):
@@ -163,28 +174,39 @@ class App(Frame):
     # Создание приложения для перевода систем счисления
     def createCalculatorSystemDigit(self):
         self.newApp = Toplevel(self.parent)
-        self.app = CalculatorSystemDigit(self.newApp, self.db)
+        self.app = CalculatorSystemDigit(self.newApp, self.db, self.user)
 
+    # Создание приложения с таблицой истинности
     def createTruthDiagram(self):
         self.newApp = Toplevel(self.parent)
-        self.app = TruthDiagram(self.newApp, self.db)
+        self.app = TruthDiagram(self.newApp, self.db, self.user)
 
+    # Матричный калькулятор
     def createMatrixesCalculator(self):
         self.newApp = Toplevel(self.parent)
-        self.app = MatrixesCalculator(self.newApp)
+        self.app = MatrixesCalculator(self.newApp, self.db, self.user)
 
+    # Приложение для решениея уравнений
     def createEquations(self):
         self.newApp = Toplevel(self.parent)
-        self.app = Equations(self.newApp)
+        self.app = Equations(self.newApp, self.db, self.user)
 
+    # Создание приложения для перевода единиц счисления
     def createConvers(self):
         self.newApp = Toplevel(self.parent)
-        self.app = Convers(self.newApp, self.db)
-        
+        self.app = Convers(self.newApp, self.db, self.user)
+
+    # Арифметический калькулятор
     def createCalc(self):
         self.newApp = Toplevel(self.parent)
-        self.app = Calc(self.newApp, self.db)
+        self.app = Calc(self.newApp, self.db, self.user)
 
+    # Создание случайных чисел
     def createRandom(self):
         self.newApp = Toplevel(self.parent)
-        self.app = RandomGenerator(self.newApp)
+        self.app = RandomGenerator(self.newApp, self.db, self.user)
+
+    # Приложение с настройками
+    def settings(self):
+        self.newApp = Toplevel(self.parent)
+        self.app = Settings(self.newApp, self.db, self.user)

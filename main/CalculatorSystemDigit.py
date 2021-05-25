@@ -4,12 +4,16 @@ from main.styledWidgets import EntryWithPlaceholder, HoverButton
 
 # Приложение для перевода чисел между система счисления
 class CalculatorSystemDigit(Frame):
-    def __init__(self, parent, db):
+    def __init__(self, parent, db, user):
         # Объявление переменных
         self.parent = parent
         self.db = db
+        self.user = user
         self.font30 = ("Courier", 30)
         self.font20 = ("Courier", 20)
+        self.bg_color = self.db.bg_color(self.user)
+        self.windowSize = self.db.windowSize(self.user)
+        self.activeColor = self.db.activeColor(self.user)
 
         # Основной фрейм
         self.mainPart = Frame(self.parent)
@@ -23,7 +27,7 @@ class CalculatorSystemDigit(Frame):
             self.parent,
             font=("Courier", 18),
             text='Назад',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.returnBack
         )
         self.back.pack(anchor=NW, padx=20, pady=20)
@@ -34,7 +38,7 @@ class CalculatorSystemDigit(Frame):
             text="Число для перевода и его \n система счисления",
             font=self.font30
         )
-        self.inputInformation["bg"] = '#00ace6'
+        self.inputInformation["bg"] = self.bg_color
 
         # Поле ответа
         self.outputInformation = Label(
@@ -42,7 +46,7 @@ class CalculatorSystemDigit(Frame):
             text="Результат перевода",
             font=self.font30
         )
-        self.outputInformation["bg"] = '#00ace6'
+        self.outputInformation["bg"] = self.bg_color
 
         # Место для ответа
         self.result = Label(
@@ -50,7 +54,7 @@ class CalculatorSystemDigit(Frame):
             text='Здесь будет результат',
             font=self.font30
         )
-        self.result["bg"] = '#00ace6'
+        self.result["bg"] = self.bg_color
 
         # Ввод исходной системы счисления
         self.inputNumeralSystem = EntryWithPlaceholder(
@@ -84,7 +88,7 @@ class CalculatorSystemDigit(Frame):
             self.mainPart,
             font=self.font20,
             text='Перевести',
-            activebackground='#00ff00',
+            activebackground=self.activeColor,
             command=self.translate
         )
 
@@ -117,12 +121,15 @@ class CalculatorSystemDigit(Frame):
 
         # Изменение парметров окна
         self.parent.resizable(width=False, height=False)
-        self.parent.attributes('-zoomed', True)
+        if self.windowSize:
+            self.parent.attributes('-fullscreen', True)
+        else:
+            self.parent.wm_state('zoomed')
 
         # Изменение цвета приложения
         for wid in self.parent.winfo_children():
-            wid.configure(bg='#00ace6')
-        self.parent["bg"] = '#00ace6'
+            wid.configure(bg=self.bg_color)
+        self.parent["bg"] = self.bg_color
         self.back["bg"] = "#e0e0e0"
 
     # Возврат назад
