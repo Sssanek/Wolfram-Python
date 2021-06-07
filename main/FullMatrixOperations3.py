@@ -37,17 +37,18 @@ def count_sobstv_2(mas):
 
 # решение кубического уравнения для поиска собственных чисел
 def count_sobstv_3(mas):
-    a = -1
-    b = mas[0] + mas[4] + mas[8]
-    c = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] -
+    f = -1
+    a = mas[0] + mas[4] + mas[8]
+    b = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] -
            mas[5] * mas[7] - mas[1] * mas[3] - mas[2] * mas[6])
-    d = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] \
+    c = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] \
         - mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] \
         + mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
+    a, b, c = a / f, b / f, c / f
+    x1, x2, x3 = 'nan', 'nan', 'nan'
     q = (a ** 2 - 3 * b) / 9
     r = (2 * a ** 3 - 9 * a * b + 27 * c) / 54
     s = q ** 3 - r ** 2
-    x1, x2 = 'nan', 'nan'
     if s > 0:
         fi = 1 / 3 * acos(r / (q ** 3) ** 0.5)
         x1 = -2 * q ** 0.5 * cos(fi) - a / 3
@@ -55,20 +56,15 @@ def count_sobstv_3(mas):
         x3 = -2 * q ** 0.5 * cos(fi - 2 * pi / 3) - a / 3
     elif s < 0:
         if q > 0:
-            fi = (1 / 3) * acosh(abs(r) / q ** (2/3))
+            fi = 1 / 3 * acosh(r / (q ** 3) ** 0.5)
             x1 = -2 * sgn(r) * q ** 0.5 * cosh(fi) - a / 3
-        if q < 0:
-            fi = 1 / 3 * acosh(1 + abs(r) / abs(q ** 3))
-            x1 = -2 * sgn(r) * abs(q) ** 0.5 * cosh(fi) - a / 3
-        if q == 0:
-            x1 = -(c - a ** 3 / 27) ** 1/3 - a / 3
+        elif q < 0:
+            fi = 1 / 3 * asinh(r / (q ** 3) ** 0.5)
+            x1 = -2 * sgn(r) * abs(q) ** 0.5 * sinh(fi) - a / 3
     elif s == 0:
         x1 = -2 * r ** (1 / 3) - a / 3
         x2 = r ** (1 / 3) - a / 3
-    if x2 == 'nan':
-        return x1, 'nan'
-    else:
-        return x1, x2
+    return x1, x2, x3
 
 
 # операция разложения Холецкого
@@ -203,10 +199,13 @@ def sobstv_chisla_operation(matrix, dim):
         if digit_try(matrix):
             return 'Введите цифры в поля'
         matrix = int_matrix(matrix)
-        x1, x2 = count_sobstv_3(matrix)
-        if x2 == 'nan':
-            return 'Собственные числа матрицы: ' + str(round(x1, 2))
+        x1, x2, x3 = count_sobstv_3(matrix)
+        for i in [x1, x2, x3]:
+            if i == 'nan':
+                i = ' '
+        if x1 == ' ' and x2 == ' ' and x3 == ' ':
+            return 'У матрицы нет собственных чисел'
         else:
             return 'Собственные числа матрицы: ' + str(round(x1, 2)) + ' ' +\
-                   str(round(x2, 2))
+                   str(round(x2, 2)) + ' ' + str(round(x3, 2))
     return 'Что-то пошло не так'

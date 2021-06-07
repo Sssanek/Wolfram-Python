@@ -27,7 +27,8 @@ def digit_try(mas):
     return flag
 
 
-# функция для решения квадратного уравнения, позволяющее найти собственные числа матрицы
+# функция для решения квадратного уравнения, позволяющее найти собственные
+# числа матрицы
 def count_sobstv_2(mas):
     d = (mas[0] + mas[3]) ** 2 - 4 * (mas[0] * mas[3] - mas[1] * mas[2])
     x1 = (mas[0] + mas[3] - d ** 0.5) / 2
@@ -35,19 +36,21 @@ def count_sobstv_2(mas):
     return round(x1, 2), round(x2, 2)
 
 
-# решение кубического уравнения по тригонометрической формуле Виета для кубических уравнений
+# решение кубического уравнения по тригонометрической формуле Виета для
+# кубических уравнений
 def count_sobstv_3(mas):
-    a = -1
-    b = mas[0] + mas[4] + mas[8]
-    c = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] -
+    f = -1
+    a = mas[0] + mas[4] + mas[8]
+    b = - (mas[0] * mas[4] + mas[0] * mas[8] + mas[4] * mas[8] -
            mas[5] * mas[7] - mas[1] * mas[3] - mas[2] * mas[6])
-    d = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] -\
-        mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] +\
-        mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
+    c = mas[0] * mas[4] * mas[8] - mas[0] * mas[5] * mas[7] \
+        - mas[1] * mas[3] * mas[8] + mas[1] * mas[5] * mas[6] \
+        + mas[2] * mas[3] * mas[7] - mas[2] * mas[6] * mas[4]
+    a, b, c = a / f, b / f, c / f
+    x1, x2, x3 = 'nan', 'nan', 'nan'
     q = (a ** 2 - 3 * b) / 9
     r = (2 * a ** 3 - 9 * a * b + 27 * c) / 54
     s = q ** 3 - r ** 2
-    x1, x2 = 'nan', 'nan'
     if s > 0:
         fi = 1 / 3 * acos(r / (q ** 3) ** 0.5)
         x1 = -2 * q ** 0.5 * cos(fi) - a / 3
@@ -55,20 +58,16 @@ def count_sobstv_3(mas):
         x3 = -2 * q ** 0.5 * cos(fi - 2 * pi / 3) - a / 3
     elif s < 0:
         if q > 0:
-            fi = (1 / 3) * acosh(abs(r) / q ** (2/3))
+            fi = 1 / 3 * acosh(r / (q ** 3) ** 0.5)
             x1 = -2 * sgn(r) * q ** 0.5 * cosh(fi) - a / 3
-        if q < 0:
-            fi = 1 / 3 * acosh(1 + abs(r) / abs(q ** 3))
-            x1 = -2 * sgn(r) * abs(q) ** 0.5 * cosh(fi) - a / 3
-        if q == 0:
-            x1 = -(c - a ** 3 / 27) ** 1/3 - a / 3
+        elif q < 0:
+            fi = 1 / 3 * asinh(r / (q ** 3) ** 0.5)
+            x1 = -2 * sgn(r) * abs(q) ** 0.5 * sinh(fi) - a / 3
     elif s == 0:
         x1 = -2 * r ** (1 / 3) - a / 3
         x2 = r ** (1 / 3) - a / 3
-    if x2 == 'nan':
-        return x1, 'nan'
-    else:
-        return x1, x2
+    return x1, x2, x3
+
 
 # функция поиска собственных векторов матрицы
 def sobstv_vectors_operation(matrix, dim):
@@ -82,7 +81,8 @@ def sobstv_vectors_operation(matrix, dim):
         matrix = int_matrix(matrix)
         x1, x2 = count_sobstv_2(matrix)
         flag = True
-        # в зависимости от решения квадратного уравнения и нахождения собственных чисел матрицы определяется решение
+        # в зависимости от решения квадратного уравнения и нахождения
+        # собственных чисел матрицы определяется решение
         # системы уравнений для того, чтобы сформулировать собственный вектор
         A = matrix[0] - matrix[2] - x1
         B = matrix[1] - matrix[3] + x1
@@ -123,10 +123,13 @@ def sobstv_vectors_operation(matrix, dim):
         if digit_try(matrix):
             return 'Введите цифры в поля'
         matrix = int_matrix(matrix)
-        x1, x2 = count_sobstv_3(matrix)
+        x1, x2, x3 = count_sobstv_3(matrix)
         # аналогично значения вектора (здесь уже трехмерного)
         u1, u2, u3 = 0, 0, 0
-        # в зависимости от решений уравнения различные сценарии подсчета, вытекающие из решения системы путем
+        q1, q2, q3 = 0, 0, 0
+        y1, y2, y3 = 0, 0, 0
+        # в зависимости от решений уравнения различные сценарии подсчета
+        # вытекающие из решения системы путем
         # подстановки некторых переменных
         if x2 == 'nan':
             flag = True
@@ -168,8 +171,7 @@ def sobstv_vectors_operation(matrix, dim):
             return 'собственный вектор матрицы:\n' + '(' + str(
                 round(y1, 2)) + ',' + str(round(y2, 2)) + ',' + str(
                 round(y3, 2)) + ')'
-        else:
-            y1, y2, y3 = 0, 0, 0
+        elif x3 == 'nan':
             count = 0
             a = (matrix[0] - x1 + matrix[3] + matrix[6])
             b = (matrix[1] + matrix[4] - x1 + matrix[7])
@@ -200,35 +202,125 @@ def sobstv_vectors_operation(matrix, dim):
                     y2 = 1
                     y3 = - (a + b) / c
                     count += 1
-                a = (matrix[0] - x2 + matrix[3] + matrix[6])
-                b = (matrix[1] + matrix[4] - x2 + matrix[7])
-                c = (matrix[2] + matrix[5] + matrix[8] - x2)
-                if a == b == c == 0:
-                    u1, u2, u3 = 1, 1, 1
-                if (a == 0 and b == 0) or (a == 0 and c == 0) or (
-                        c == 0 and b == 0):
-                    pass
-                else:
-                    if a == 0:
-                        u1 = 1
-                        u2 = 1
-                        u3 = - b / c
-                        count += 1
-                    if b == 0:
-                        u2 = 1
-                        u1 = 1
-                        u3 = - a / c
-                        count += 1
-                    if c == 0:
-                        u3 = 1
-                        u1 = 1
-                        u2 = - a / b
-                        count += 1
-                    if u1 == u2 == u3 == 0:
-                        u1 = 1
-                        u2 = 1
-                        u3 = - (a + b) / c
-                        count += 1
+            a = (matrix[0] - x2 + matrix[3] + matrix[6])
+            b = (matrix[1] + matrix[4] - x2 + matrix[7])
+            c = (matrix[2] + matrix[5] + matrix[8] - x2)
+            if a == b == c == 0:
+                u1, u2, u3 = 1, 1, 1
+            if (a == 0 and b == 0) or (a == 0 and c == 0) or (
+                    c == 0 and b == 0):
+                pass
+            else:
+                if a == 0:
+                    u1 = 1
+                    u2 = 1
+                    u3 = - b / c
+                    count += 1
+                if b == 0:
+                    u2 = 1
+                    u1 = 1
+                    u3 = - a / c
+                    count += 1
+                if c == 0:
+                    u3 = 1
+                    u1 = 1
+                    u2 = - a / b
+                    count += 1
+                if u1 == u2 == u3 == 0:
+                    u1 = 1
+                    u2 = 1
+                    u3 = - (a + b) / c
+                    count += 1
+        else:
+            y1, y2, y3 = 0, 0, 0
+            count = 0
+            a = (matrix[0] - x1 + matrix[3] + matrix[6])
+            b = (matrix[1] + matrix[4] - x1 + matrix[7])
+            c = (matrix[2] + matrix[5] + matrix[8] - x1)
+            if a == b == c == 0:
+                y1, y2, y3 = 1, 1, 1
+            if (a == 0 and b == 0) or (a == 0 and c == 0) \
+                    or (c == 0 and b == 0):
+                pass
+            else:
+                if a == 0:
+                    y1 = 1
+                    y2 = 1
+                    y3 = - b / c
+                    count += 1
+                if b == 0:
+                    y2 = 1
+                    y1 = 1
+                    y3 = - a / c
+                    count += 1
+                if c == 0:
+                    y3 = 1
+                    y1 = 1
+                    y2 = - a / b
+                    count += 1
+                if y1 == y2 == y3 == 0:
+                    y1 = 1
+                    y2 = 1
+                    y3 = - (a + b) / c
+                    count += 1
+            a = (matrix[0] - x2 + matrix[3] + matrix[6])
+            b = (matrix[1] + matrix[4] - x2 + matrix[7])
+            c = (matrix[2] + matrix[5] + matrix[8] - x2)
+            if a == b == c == 0:
+                u1, u2, u3 = 1, 1, 1
+            if (a == 0 and b == 0) or (a == 0 and c == 0) or (
+                    c == 0 and b == 0):
+                pass
+            else:
+                if a == 0:
+                    u1 = 1
+                    u2 = 1
+                    u3 = - b / c
+                    count += 1
+                if b == 0:
+                    u2 = 1
+                    u1 = 1
+                    u3 = - a / c
+                    count += 1
+                if c == 0:
+                    u3 = 1
+                    u1 = 1
+                    u2 = - a / b
+                    count += 1
+                if u1 == u2 == u3 == 0:
+                    u1 = 1
+                    u2 = 1
+                    u3 = - (a + b) / c
+                    count += 1
+            a = (matrix[0] - x3 + matrix[3] + matrix[6])
+            b = (matrix[1] + matrix[4] - x3 + matrix[7])
+            c = (matrix[2] + matrix[5] + matrix[8] - x3)
+            if a == b == c == 0:
+                q1, q2, q3 = 1, 1, 1
+            if (a == 0 and b == 0) or (a == 0 and c == 0) or (
+                    c == 0 and b == 0):
+                pass
+            else:
+                if a == 0:
+                    q1 = 1
+                    q2 = 1
+                    q3 = - b / c
+                    count += 1
+                if b == 0:
+                    q2 = 1
+                    q1 = 1
+                    q3 = - a / c
+                    count += 1
+                if c == 0:
+                    q3 = 1
+                    q1 = 1
+                    q2 = - a / b
+                    count += 1
+                if q1 == q2 == q3 == 0:
+                    q1 = 1
+                    q2 = 1
+                    q3 = - (a + b) / c
+                    count += 1
         # вывод результата
         if count == 0:
             return 'У матрицы нет собственных векторов'
@@ -242,9 +334,17 @@ def sobstv_vectors_operation(matrix, dim):
                     round(u1, 2)) + ',' + str(round(u2, 2)) + ',' + str(
                     round(u3, 2)) + ')'
         elif count == 2:
-            'собственные вектора матрицы:\n' + '(' + str(
+            return 'собственные вектора матрицы:\n' + '(' + str(
                 round(y1, 2)) + ',' + str(round(y2, 2)) + ',' + str(
                 round(y3, 2)) + ')\n' + '(' + str(
                 round(u1, 2)) + ',' + str(round(u2, 2)) + ',' + str(
                 round(u3, 2)) + ')'
+        elif count == 3:
+            return 'собственные вектора матрицы:\n' + '(' + str(
+                round(y1, 2)) + ',' + str(round(y2, 2)) + ',' + str(
+                round(y3, 2)) + ')\n' + '(' + str(
+                round(u1, 2)) + ',' + str(round(u2, 2)) + ',' + str(
+                round(u3, 2)) + ')\n' + '(' + str(
+                round(q1, 2)) + ',' + str(round(q2, 2)) + ',' + str(
+                round(q3, 2)) + ')'
     return 'Что-то пошло не так'
